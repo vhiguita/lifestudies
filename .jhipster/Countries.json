@@ -1,0 +1,19 @@
+{
+    "name": "Countries",
+    "fields": [
+        {
+            "fieldName": "countryCode",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181010161536",
+    "entityTableName": "countries",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

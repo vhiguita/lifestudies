@@ -1,0 +1,24 @@
+
+{
+    "testApp": {
+        "rolLocation" : {
+            "home": {
+                "title": "Rol Locations",
+                "createLabel": "Criar um(a) novo(a) Rol Location",
+                "createOrEditLabel": "Criar ou editar um(a) Rol Location"
+            },
+            "created": "A new Rol Location is created with identifier {{ param }}",
+            "updated": "A Rol Location is updated with identifier {{ param }}",
+            "deleted": "A Rol Location is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Rol Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Rol Location"
+            },
+            "content": "Content",
+            "rol": "Rol",
+            "language": "Language"
+        }
+    }
+}

@@ -1,0 +1,41 @@
+entity Countries {
+	countryCode String
+}
+entity Language {
+    languageCode String,
+	description String
+}
+entity Rol {
+	description String
+}
+entity CountryLocation {
+	countryCode String,
+    content String
+}
+entity RolLocation {
+    content String
+}
+relationship ManyToOne {
+	RolLocation{rol} to Rol
+}
+relationship ManyToOne {
+    RolLocation{language} to Language
+}
+relationship ManyToOne {
+    CountryLocation{language} to Language
+}
+entity UserRegistration {
+    userName String,
+    countryCode String,
+    city String,
+    citizenshipCode String,
+    secondCitizenshipCode String,
+    secondCitizenship Boolean
+}
+relationship OneToOne {
+	UserRegistration{rol} to Rol
+}
+paginate UserRegistration with infinite-scroll
+service all with serviceImpl
+// an ignored comment
+/** not an ignored comment */

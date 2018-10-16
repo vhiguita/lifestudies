@@ -1,0 +1,22 @@
+
+{
+    "testApp": {
+        "countries" : {
+            "home": {
+                "title": "Countries",
+                "createLabel": "Crear nuevo Countries",
+                "createOrEditLabel": "Crear o editar Countries"
+            },
+            "created": "Un nuevo Countries ha sido creado con el identificador {{ param }}",
+            "updated": "Un Countries ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Countries ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Countries {{ id }}?"
+            },
+            "detail": {
+                "title": "Countries"
+            },
+            "countryCode": "Country Code"
+        }
+    }
+}

@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="userRegistration">
+            <h2><span jhiTranslate="testApp.userRegistration.detail.title">User Registration</span> {{userRegistration.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="testApp.userRegistration.userName">User Name</span></dt>
+                <dd>
+                    <span>{{userRegistration.userName}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.countryCode">Country Code</span></dt>
+                <dd>
+                    <span>{{userRegistration.countryCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.city">City</span></dt>
+                <dd>
+                    <span>{{userRegistration.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.citizenshipCode">Citizenship Code</span></dt>
+                <dd>
+                    <span>{{userRegistration.citizenshipCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.secondCitizenshipCode">Second Citizenship Code</span></dt>
+                <dd>
+                    <span>{{userRegistration.secondCitizenshipCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.secondCitizenship">Second Citizenship</span></dt>
+                <dd>
+                    <span>{{userRegistration.secondCitizenship}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.userRegistration.rol">Rol</span></dt>
+                <dd>
+                    <div *ngIf="userRegistration.rol">
+                        <a [routerLink]="['/rol', userRegistration.rol?.id, 'view']">{{userRegistration.rol?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/user-registration', userRegistration.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="countryLocation">
+            <h2><span jhiTranslate="testApp.countryLocation.detail.title">Country Location</span> {{countryLocation.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="testApp.countryLocation.countryCode">Country Code</span></dt>
+                <dd>
+                    <span>{{countryLocation.countryCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.countryLocation.content">Content</span></dt>
+                <dd>
+                    <span>{{countryLocation.content}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.countryLocation.language">Language</span></dt>
+                <dd>
+                    <div *ngIf="countryLocation.language">
+                        <a [routerLink]="['/language', countryLocation.language?.id, 'view']">{{countryLocation.language?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/country-location', countryLocation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{
+    "name": "RolLocation",
+    "fields": [
+        {
+            "fieldName": "content",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "rol",
+            "otherEntityName": "rol",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "language",
+            "otherEntityName": "language",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181010161540",
+    "entityTableName": "rol_location",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

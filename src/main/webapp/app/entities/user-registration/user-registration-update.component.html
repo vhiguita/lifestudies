@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-user-registration-heading" jhiTranslate="testApp.userRegistration.home.createOrEditLabel">Create or edit a User Registration</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!userRegistration.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="userRegistration.id" readonly />
+                </div>
+                <!--<div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.userName" for="field_userName">User Name</label>
+                    <input type="text" class="form-control" name="userName" id="field_userName"
+                        [(ngModel)]="userRegistration.userName" />
+                </div>-->
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.countryCode" for="field_countryCode">Country Code</label>
+                    <!--<input type="text" class="form-control" name="countryCode" id="field_countryCode"
+                        [(ngModel)]="userRegistration.countryCode" />-->
+                    <select class="form-control" name="countryCode" id="field_countryCode" [(ngModel)]="userRegistration.countryCode">
+                                    <option value="" disabled></option>
+                                    <option *ngFor="let co of countryLocations" [ngValue]="co.countryCode" >
+                                      {{ co.content }}
+                                    </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="userRegistration.city" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.citizenshipCode" for="field_citizenshipCode">Citizenship Code</label>
+                    <!--<input type="text" class="form-control" name="citizenshipCode" id="field_citizenshipCode"
+                        [(ngModel)]="userRegistration.citizenshipCode" />-->
+                    <select class="form-control" name="citizenshipCode" id="field_citizenshipCode" [(ngModel)]="userRegistration.citizenshipCode">
+                                    <option value="" disabled></option>
+                                    <option *ngFor="let c of countryLocations" [ngValue]="c.countryCode" >
+                                      {{ c.content }}
+                                    </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.secondCitizenship" for="field_secondCitizenship">Second Citizenship</label>
+                    <input type="checkbox" class="form-control" name="secondCitizenship" id="field_secondCitizenship"
+                        [(ngModel)]="userRegistration.secondCitizenship" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.secondCitizenshipCode" for="field_secondCitizenshipCode">Second Citizenship Code</label>
+                    <!--<input type="text" class="form-control" name="secondCitizenshipCode" id="field_secondCitizenshipCode"
+                        [(ngModel)]="userRegistration.secondCitizenshipCode" />-->
+                    <select class="form-control" name="secondCitizenshipCode" id="field_secondCitizenshipCode" [(ngModel)]="userRegistration.secondCitizenshipCode">
+                                      <option value="" disabled></option>
+                                      <option *ngFor="let sc of countryLocations" [ngValue]="sc.countryCode" >
+                                        {{ sc.content }}
+                                      </option>
+                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="testApp.userRegistration.rol" for="field_rol">Rol</label>
+                    <select class="form-control" id="field_rol" name="rol" [(ngModel)]="userRegistration.rol">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="rolOption.rol.id === userRegistration.rol?.id ? userRegistration.rol : rolOption" *ngFor="let rolOption of rolLocations; trackBy: trackRolById">{{rolOption.rol.id}} - {{rolOption.content}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

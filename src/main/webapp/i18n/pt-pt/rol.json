@@ -1,0 +1,22 @@
+
+{
+    "testApp": {
+        "rol" : {
+            "home": {
+                "title": "Rols",
+                "createLabel": "Criar um(a) novo(a) Rol",
+                "createOrEditLabel": "Criar ou editar um(a) Rol"
+            },
+            "created": "A new Rol is created with identifier {{ param }}",
+            "updated": "A Rol is updated with identifier {{ param }}",
+            "deleted": "A Rol is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Rol {{ id }}?"
+            },
+            "detail": {
+                "title": "Rol"
+            },
+            "description": "Description"
+        }
+    }
+}

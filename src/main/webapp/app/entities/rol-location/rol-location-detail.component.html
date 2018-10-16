@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="rolLocation">
+            <h2><span jhiTranslate="testApp.rolLocation.detail.title">Rol Location</span> {{rolLocation.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="testApp.rolLocation.content">Content</span></dt>
+                <dd>
+                    <span>{{rolLocation.content}}</span>
+                </dd>
+                <dt><span jhiTranslate="testApp.rolLocation.rol">Rol</span></dt>
+                <dd>
+                    <div *ngIf="rolLocation.rol">
+                        <a [routerLink]="['/rol', rolLocation.rol?.id, 'view']">{{rolLocation.rol?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="testApp.rolLocation.language">Language</span></dt>
+                <dd>
+                    <div *ngIf="rolLocation.language">
+                        <a [routerLink]="['/language', rolLocation.language?.id, 'view']">{{rolLocation.language?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/rol-location', rolLocation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
