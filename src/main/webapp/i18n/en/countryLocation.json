@@ -1,0 +1,24 @@
+
+{
+    "testApp": {
+        "countryLocation" : {
+            "home": {
+                "title": "Country Locations",
+                "createLabel": "Create a new Country Location",
+                "createOrEditLabel": "Create or edit a Country Location"
+            },
+            "created": "A new Country Location is created with identifier {{ param }}",
+            "updated": "A Country Location is updated with identifier {{ param }}",
+            "deleted": "A Country Location is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Country Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Country Location"
+            },
+            "countryCode": "Country Code",
+            "content": "Content",
+            "language": "Language"
+        }
+    }
+}

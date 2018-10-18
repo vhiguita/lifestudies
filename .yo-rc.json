@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.mycompany.myapp",
+      "nativeLanguage": "es"
+    },
+    "jhipsterVersion": "5.3.4",
+    "applicationType": "monolith",
+    "baseName": "test",
+    "packageName": "com.mycompany.myapp",
+    "packageFolder": "com/mycompany/myapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "M2I3MzNhMGNmMDhmYzBkMTllOWZkZjNiNDhmN2FhYmQ4YTNjNjcxZDdhYjkyZGFiZDM3OWFiOTc1ZTczZDM5OTRmZGZmZGJhMDI1NWJhMzJlOGQzNjk4MGQ4OTlkODEyZTgwMmUyNDAzMGUyMGNlMWQwNmNmMDEwZTcxOTE0MWY=",
+    "clientFramework": "angularX",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [
+      "protractor"
+    ],
+    "jhiPrefix": "jhi",
+    "enableTranslation": true,
+    "nativeLanguage": "es",
+    "languages": [
+      "es",
+      "en",
+      "pt-pt"
+    ],
+    "herokuAppName": "lifestudiesbackend",
+    "herokuDeployType": "git"
+  }
+}

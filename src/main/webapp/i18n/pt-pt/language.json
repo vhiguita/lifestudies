@@ -1,0 +1,23 @@
+
+{
+    "testApp": {
+        "language" : {
+            "home": {
+                "title": "Languages",
+                "createLabel": "Criar um(a) novo(a) Language",
+                "createOrEditLabel": "Criar ou editar um(a) Language"
+            },
+            "created": "A new Language is created with identifier {{ param }}",
+            "updated": "A Language is updated with identifier {{ param }}",
+            "deleted": "A Language is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Language {{ id }}?"
+            },
+            "detail": {
+                "title": "Language"
+            },
+            "languageCode": "Language Code",
+            "description": "Description"
+        }
+    }
+}

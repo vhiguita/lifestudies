@@ -1,0 +1,48 @@
+{
+    "name": "UserRegistration",
+    "fields": [
+        {
+            "fieldName": "userName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "countryCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "citizenshipCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "secondCitizenshipCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "secondCitizenship",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "rol",
+            "otherEntityName": "rol",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userRegistration"
+        }
+    ],
+    "changelogDate": "20181010161541",
+    "entityTableName": "user_registration",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

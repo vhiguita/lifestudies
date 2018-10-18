@@ -1,0 +1,28 @@
+
+{
+    "testApp": {
+        "userRegistration" : {
+            "home": {
+                "title": "User Registrations",
+                "createLabel": "Criar um(a) novo(a) User Registration",
+                "createOrEditLabel": "Criar ou editar um(a) User Registration"
+            },
+            "created": "A new User Registration is created with identifier {{ param }}",
+            "updated": "A User Registration is updated with identifier {{ param }}",
+            "deleted": "A User Registration is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) User Registration {{ id }}?"
+            },
+            "detail": {
+                "title": "User Registration"
+            },
+            "userName": "User Name",
+            "countryCode": "Country Code",
+            "city": "City",
+            "citizenshipCode": "Citizenship Code",
+            "secondCitizenshipCode": "Second Citizenship Code",
+            "secondCitizenship": "Second Citizenship",
+            "rol": "Rol"
+        }
+    }
+}
