@@ -9,7 +9,16 @@ Main page styles
     background: url('../../content/images/hipster.png') no-repeat center top;
     background-size: contain;
 }
-
+.main {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.btn-div{
+  margin: 30px auto; 
+  width: 100%;
+  text-align: center;
+}
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
     only screen and (-moz-min-device-pixel-ratio: 2),

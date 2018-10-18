@@ -4,8 +4,9 @@
             <fa-icon [icon]="'bars'"></fa-icon>
         </a>
         <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
-            <span class="logo-img"></span>
-            <span jhiTranslate="global.title" class="navbar-title">Test</span> <span class="navbar-version">{{version}}</span>
+            <img src="https://www.lifestudies.co/wp-content/uploads/2018/06/logo-life-studies.png" class="img-responsive" alt="Lifestudies">
+            <!--<span class="logo-img"></span>
+            <span jhiTranslate="global.title" class="navbar-title">Test</span> <span class="navbar-version">{{version}}</span>-->
         </a>
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
