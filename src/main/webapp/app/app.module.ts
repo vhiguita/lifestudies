@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import './vendor.ts';
 
 import { NgModule, Injector } from '@angular/core';
