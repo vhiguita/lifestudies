@@ -36,12 +36,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
-        this.getCities();
-    }
-    getCities() {
-      this.commonService.getCities('Colombia').then(response => {
-        console.log(response);
-      });
     }
     ngAfterViewInit() {
         this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#login'), 'focus', []);

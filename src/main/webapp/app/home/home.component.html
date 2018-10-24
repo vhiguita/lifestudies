@@ -3,14 +3,45 @@
         <span class="hipster img-fluid rounded"></span>
     </div>-->
     <div class="main">
-      <main style="padding:40px">
-        <div id="lead-widget"></div>
-      </main>
-
+        <!--<div>
+          <div id="lead-widget"></div>
+        </div>-->
         <div>
             <div class="form-row col-md-12">
               <div class="form-group col-md-12">
-                <input class="form-control" id="inputdefault" type="text">
+                <label for="inputAddress">Ciudad</label>
+                 <div class="input-group">
+                    <ng-select [allowClear]="true"
+                    [items]="items"
+                    [disabled]="disabled"
+                    (data)="refreshValue($event)"
+                    (selected)="selected($event)"
+                    (removed)="removed($event)"
+                    (typed)="typed($event)"
+                    placeholder="No city selected">
+                   </ng-select>
+                  </div>
+                <!--<ng-select class="custom" [items]="cities"
+                 [virtualScroll]="true"
+                 [loading]="loading"
+                 bindLabel="description"
+                 bindValue="id"
+                 placeholder=""
+                 [(ngModel)]="o.cityId"
+                 (scrollToEnd)="fetchMore($event)" ngDefaultControl>
+                 <ng-template ng-header-tmp>
+                    <small class="form-text text-muted">{{citiesBuffer.length}} de {{cities.length}}</small>
+                 </ng-template>
+                 <ng-template ng-option-tmp let-item="item" let-index="index">
+                   {{item.description}}
+                </ng-template>
+              </ng-select>-->
+                <!--<input class="form-control" type="text" [(ngModel)]="term">
+                <div *ngFor = "let item of cities |filter:term" >
+                  <p>
+                    {{item.description}}
+                  </p>
+                </div>-->
               </div>
             </div>
             <div class="form-row col-md-12">
@@ -19,14 +50,25 @@
                   <div class="input-group">
                     <select class="form-control" name="courseType" id="courseType" [(ngModel)]="o.courseType" #courseType="ngModel">
                       <option value="" disabled></option>
-                      <option *ngFor="let c of courses" [ngValue]="c.id">
+                      <option *ngFor="let c of coursesType" [ngValue]="c.id">
                         {{c.description}}
                       </option>
                     </select>
                   </div>
                </div>
+               <!--<div class="form-group col-md-3">
+                 <label for="inputAddress">Categorías</label>
+                  <div class="input-group">
+                    <select class="form-control" name="courseCategory" id="courseCategory" [(ngModel)]="o.courseCategory" #courseCategory="ngModel">
+                      <option value="" disabled></option>
+                      <option *ngFor="let ct of courses" [ngValue]="ct.id">
+                        {{ct.description}}
+                      </option>
+                    </select>
+                  </div>
+               </div>-->
                <div class="form-group col-md-4">
-                 <label>Fecha</label>
+                 <label>Fecha inicio</label>
                    <div class="input-group">
                      <span class="input-group-addon" (click)="d.toggle()" style="float:left;"><i class="icofont icofont-ui-calendar"></i></span>
                      <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseDate"/>

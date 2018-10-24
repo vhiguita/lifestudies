@@ -2,6 +2,7 @@
 Main page styles
 ========================================================================== */
 
+
 .hipster {
     display: inline-block;
     width: 347px;
@@ -15,7 +16,7 @@ Main page styles
     max-width: 100%;
 }
 .btn-div{
-  margin: 30px auto; 
+  margin: 30px auto;
   width: 100%;
   text-align: center;
 }
