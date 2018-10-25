@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import {CommonService} from '../common.service';
 import { JhiEventManager } from 'ng-jhipster';
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 import { LoginModalService, Principal, Account } from 'app/core';
 declare var $: any;
@@ -20,7 +22,16 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     weekNumber: any = [];
     coursesCategory: any = [];
+    singleSelect: any = [];
+    title = 'app';
+    tab = 1;
+    config = {
+      displayKey: 'name', // if objects array passed which key to be displayed defaults to description
+      search: true,
+      limitTo: 3
+    };
     cities: any = [];
+    citiesAux: any = [];
     citiesBuffer: any = [];
     coursesType: any = [{id:'Language',description:'Idiomas'},
     {id:'SummerCamp',description:'SummerCamp'},
@@ -30,6 +41,12 @@ export class HomeComponent implements OnInit {
     o: any= {};
     bufferSize = 50;
     loading = false;
+    public model: any;
+    public search: any;
+
+    private value:any = {};
+    private _disabledV = '0';
+    private disabled = false;
     public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
     'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
@@ -40,37 +57,31 @@ export class HomeComponent implements OnInit {
     'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
+    options = [
+    {
+      '_id': '5a66d6c31d5e4e36c7711b7a',
+      'index': 0,
+      'balance': '$2,806.37',
+      'picture': 'http://placehold.it/32x32',
+      'name': 'Burns Dalton'
+    },
+    {
+      '_id': '5a66d6c3657e60c6073a2d22',
+      'index': 1,
+      'balance': '$2,984.98',
+      'picture': 'http://placehold.it/32x32',
+      'name': 'Mcintyre Lawson'
+    },
+    {
+      '_id': '5a66d6c376be165a5a7fae33',
+      'index': 2,
+      'balance': '$2,794.16',
+      'picture': 'http://placehold.it/32x32',
+      'name': 'Amie Franklin'
+    }
+  ];
 
-  private value:any = {};
-  private _disabledV = '0';
-  private disabled = false;
-
-  private get disabledV():string {
-    return this._disabledV;
-  }
-
-  private set disabledV(value:string) {
-    this._disabledV = value;
-    this.disabled = this._disabledV === '1';
-  }
-
-  public selected(value:any):void {
-    console.log('Selected value is: ', value);
-  }
-
-  public removed(value:any):void {
-    console.log('Removed value is: ', value);
-  }
-
-  public typed(value:any):void {
-    console.log('New search input: ', value);
-  }
-
-  public refreshValue(value:any):void {
-    this.value = value;
-  }
-
-    constructor(
+  constructor(
       public parserFormatter: NgbDateParserFormatter,
       private principal: Principal,
       private commonService: CommonService,
@@ -88,8 +99,49 @@ export class HomeComponent implements OnInit {
         this.cities = this.commonService.getCities().resourceList;
         this.cities.map( i => { i.description = i.name+', '+i.district+', '+i.countryCode; return i; });
         this.citiesBuffer = this.cities.slice(0, this.bufferSize);
-        console.log(this.cities);
-        console.log(this.cities.length);
+        // console.log(this.cities);
+        // console.log(this.cities.length);
+        for(let i=0;i<this.cities.length;i++) {
+          this.cities[i].description = this.cities[i].description.replace('null, ','');
+          this.citiesAux[i] = this.cities[i].description;
+        }
+        console.log(this.citiesAux);
+        // this.coursesCategory = this.commonService.getCourseCategories().resourceList;
+        this.search = (text$: Observable<string>) =>
+        text$.pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          map(term => term.length < 2 ? []
+            : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+        );
+
+    }
+    private get disabledV():string {
+      return this._disabledV;
+    }
+
+    private set disabledV(value:string) {
+      this._disabledV = value;
+      this.disabled = this._disabledV === '1';
+    }
+
+    public selected(value:any):void {
+      console.log('Selected value is: ', value);
+    }
+
+    public removed(value:any):void {
+      console.log('Removed value is: ', value);
+    }
+
+    public typed(value:any):void {
+      console.log('New search input: ', value);
+    }
+
+    public refreshValue(value:any):void {
+      this.value = value;
+    }
+    changeValue($event: any) {
+      console.log($event);
     }
     fetchMore() {
       const len = this.citiesBuffer.length;
@@ -100,6 +152,12 @@ export class HomeComponent implements OnInit {
           this.loading = false;
           this.citiesBuffer = this.citiesBuffer.concat(more);
       }, 200);
+    }
+    getCoursesCategories(e): void {
+      this.coursesCategory = [];
+      this.o.courseCategory = null;
+      this.coursesCategory = this.commonService.getCourseCategoriesByCourseType(e).resourceList;
+      console.log(this.coursesCategory);
     }
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', message => {
@@ -115,5 +173,14 @@ export class HomeComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+    searchCourses() {
+      console.log(this.model);
+      // const fecha = this.parserFormatter.format(this.o.courseStartDate);
+      this.o.startDate = this.o.courseStartDate._i;
+      // this.o.startDate = this.parserFormatter.format(this.o.courseDate);
+      console.log(this.o);
+
+      // alert('Búsqueda de cursos');
     }
 }

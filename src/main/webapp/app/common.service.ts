@@ -11,6 +11,8 @@ declare var $: any;
 })
 export class CommonService {
   userAccount = 'ksuhiyp';
+  token1 = 'olOICvdjKJAOaEIGtnEZRTsN';
+  token2 = 'o8f1ZipUW9i2wT2N8YOk0syV';
   constructor(
     private http: HttpClient,
     private httpClient: HttpClient,
@@ -25,7 +27,7 @@ export class CommonService {
         return obj;
       });
   }*/
-  getResource(): any {
+  /*getResource(): any {
     let data;
     $.ajax({
       crossDomain: true,
@@ -37,14 +39,40 @@ export class CommonService {
         data = resp;
     });
     return data;
-  }
+  }*/
   getCities(): any {
     let data;
     $.ajax({
       crossDomain: true,
       type: 'GET',
       dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/integration/lifestudies/widget/olOICvdjKJAOaEIGtnEZRTsN/city',
+      url: 'https://server.bookandlearn.com/masterkey/integration/lifestudies/widget/'+this.token1+'/city',
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+    });
+    return data;
+  }
+  getCourseCategories(): any {
+    let data;
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/courseCategory?courseType=Language',
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+    });
+    return data;
+  }
+  getCourseCategoriesByCourseType(type): any {
+    let data;
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/courseCategory?courseType='+type,
       async: false,
     }).done(function(resp) {
         data = resp;

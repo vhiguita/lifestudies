@@ -9,8 +9,10 @@
         <div>
             <div class="form-row col-md-12">
               <div class="form-group col-md-12">
-                <label for="inputAddress">Ciudad</label>
+                <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>
+                <!--<label for="inputAddress">Ciudad</label>
                  <div class="input-group">
+                    <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
                     <ng-select [allowClear]="true"
                     [items]="items"
                     [disabled]="disabled"
@@ -20,8 +22,7 @@
                     (typed)="typed($event)"
                     placeholder="No city selected">
                    </ng-select>
-                  </div>
-                <!--<ng-select class="custom" [items]="cities"
+                <ng-select class="custom" [items]="cities"
                  [virtualScroll]="true"
                  [loading]="loading"
                  bindLabel="description"
@@ -41,14 +42,15 @@
                   <p>
                     {{item.description}}
                   </p>
+                </div>
                 </div>-->
               </div>
             </div>
             <div class="form-row col-md-12">
-               <div class="form-group col-md-4">
+               <div class="form-group col-md-3">
                  <label for="inputAddress">Tipo curso</label>
                   <div class="input-group">
-                    <select class="form-control" name="courseType" id="courseType" [(ngModel)]="o.courseType" #courseType="ngModel">
+                    <select class="form-control" name="courseType" id="courseType" [(ngModel)]="o.courseType" #courseType="ngModel" (ngModelChange)="getCoursesCategories($event)">
                       <option value="" disabled></option>
                       <option *ngFor="let c of coursesType" [ngValue]="c.id">
                         {{c.description}}
@@ -56,26 +58,26 @@
                     </select>
                   </div>
                </div>
-               <!--<div class="form-group col-md-3">
+               <div class="form-group col-md-3">
                  <label for="inputAddress">Categorías</label>
                   <div class="input-group">
                     <select class="form-control" name="courseCategory" id="courseCategory" [(ngModel)]="o.courseCategory" #courseCategory="ngModel">
                       <option value="" disabled></option>
-                      <option *ngFor="let ct of courses" [ngValue]="ct.id">
-                        {{ct.description}}
+                      <option *ngFor="let ct of coursesCategory" [ngValue]="ct.name">
+                        {{ct.name}}
                       </option>
                     </select>
                   </div>
-               </div>-->
-               <div class="form-group col-md-4">
+               </div>
+               <div class="form-group col-md-3">
                  <label>Fecha inicio</label>
                    <div class="input-group">
                      <span class="input-group-addon" (click)="d.toggle()" style="float:left;"><i class="icofont icofont-ui-calendar"></i></span>
-                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseDate"/>
+                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseStartDate" (keyup)="onKey()" #courseStartDate="ngModel"/>
                      <!--<input type="text" class="form-control" placeholder="yyyy-mm-dd" id="date" name="date" [(ngModel)]="o.date" ngbDatepicker #d="ngbDatepicker" (keyup)="onKey()" #date"ngModel">-->
                    </div>
                </div>
-               <div class="form-group col-md-4">
+               <div class="form-group col-md-3">
                  <label for="inputAddress">Número de semanas</label>
                   <div class="input-group">
                     <select class="form-control" name="numberOfWeeks" id="numberOfWeeks" [(ngModel)]="o.numberOfWeeks" #numberOfWeeks="ngModel">
@@ -89,7 +91,7 @@
             </div>
         </div>
         <div class="btn-div">
-            <button class="btn btn-primary btn-xs" type="button">Búsqueda</button>
+            <button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>
         </div>
     </div>
 </div>
