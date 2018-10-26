@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     weekNumber: any = [];
     coursesCategory: any = [];
+    courses: any = [];
     singleSelect: any = [];
     title = 'app';
     tab = 1;
@@ -105,7 +106,7 @@ export class HomeComponent implements OnInit {
           this.cities[i].description = this.cities[i].description.replace('null, ','');
           this.citiesAux[i] = this.cities[i].description;
         }
-        console.log(this.citiesAux);
+        // console.log(this.citiesAux);
         // this.coursesCategory = this.commonService.getCourseCategories().resourceList;
         this.search = (text$: Observable<string>) =>
         text$.pipe(
@@ -114,9 +115,8 @@ export class HomeComponent implements OnInit {
           map(term => term.length < 2 ? []
             : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
         );
-
     }
-    private get disabledV():string {
+    /*private get disabledV():string {
       return this._disabledV;
     }
 
@@ -142,7 +142,7 @@ export class HomeComponent implements OnInit {
     }
     changeValue($event: any) {
       console.log($event);
-    }
+    }*/
     fetchMore() {
       const len = this.citiesBuffer.length;
       const more = this.cities.slice(len, this.bufferSize + len);
@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit {
       this.coursesCategory = [];
       this.o.courseCategory = null;
       this.coursesCategory = this.commonService.getCourseCategoriesByCourseType(e).resourceList;
-      console.log(this.coursesCategory);
+      // console.log(this.coursesCategory);
     }
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', message => {
@@ -175,12 +175,40 @@ export class HomeComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
     searchCourses() {
-      console.log(this.model);
-      // const fecha = this.parserFormatter.format(this.o.courseStartDate);
+      // console.log(this.model);
+      let cityId, results;
+      let z=0;
+      let c = [];
+      for(let i=0;i<this.cities.length;i++) {
+         if(this.model === this.cities[i].description) {
+            cityId = this.cities[i].id;
+            break;
+         }
+      }
+      // console.log(cityId);
+      this.o.countryCode = this.model.slice(-2);
+      this.o.cityId = cityId;
       this.o.startDate = this.o.courseStartDate._i;
-      // this.o.startDate = this.parserFormatter.format(this.o.courseDate);
-      console.log(this.o);
-
-      // alert('Búsqueda de cursos');
+      // console.log(this.o);
+      results = this.commonService.getCourses(this.o);
+      if(results !== {}) {
+        this.courses =results.resourceList;
+        // console.log(this.o.numberOfWeek);
+        if(this.o.numberOfWeeks!== undefined) {
+          for(let j=0;j<this.courses.length;j++) {
+            if(this.o.numberOfWeeks>=this.courses[j].variant[0].duration.min&&
+              this.o.numberOfWeeks<=this.courses[j].variant[0].duration.max) {
+                // console.log(this.courses[j].variant[0].duration); // number of weeks of the course
+                // console.log(this.courses[j]);
+                c[z] = this.courses[j];
+                z++;
+            }
+          }
+          console.log(c);
+        } else {
+          c = this.courses;
+          console.log(c);
+        }
+      }
     }
 }

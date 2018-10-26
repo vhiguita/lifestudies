@@ -10,7 +10,7 @@ declare var $: any;
   providedIn: 'root'
 })
 export class CommonService {
-  userAccount = 'ksuhiyp';
+  // userAccount = 'ksuhiyp';
   token1 = 'olOICvdjKJAOaEIGtnEZRTsN';
   token2 = 'o8f1ZipUW9i2wT2N8YOk0syV';
   constructor(
@@ -40,6 +40,7 @@ export class CommonService {
     });
     return data;
   }*/
+  // service to get all the cities
   getCities(): any {
     let data;
     $.ajax({
@@ -53,7 +54,8 @@ export class CommonService {
     });
     return data;
   }
-  getCourseCategories(): any {
+
+  /* getCourseCategories(): any {
     let data;
     $.ajax({
       crossDomain: true,
@@ -65,7 +67,8 @@ export class CommonService {
         data = resp;
     });
     return data;
-  }
+  }*/
+  // service to get all the course categories by course type
   getCourseCategoriesByCourseType(type): any {
     let data;
     $.ajax({
@@ -77,6 +80,29 @@ export class CommonService {
     }).done(function(resp) {
         data = resp;
     });
+    return data;
+  }
+  // service to get all the available courses
+  getCourses(o): any {
+    // console.log(o);
+    let data = {};
+    let url_;
+    url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course?courseType='+o.courseType+'&courseCategory='+
+    o.courseCategory+'&countryCode='+o.countryCode+'&city='+o.cityId+'&startDate='+o.startDate;
+    // url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/o8f1ZipUW9i2wT2N8YOk0syV/course?courseType=Language&courseCategory=General&countryCode=CA&city=1';
+    try {
+      $.ajax({
+        crossDomain: true,
+        type: 'GET',
+        dataType: 'json',
+        url: url_,
+        async: false,
+      }).done(function(resp) {
+          data = resp;
+      });
+    } catch (e) {
+
+    }
     return data;
   }
 }
