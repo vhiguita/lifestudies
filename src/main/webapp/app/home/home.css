@@ -20,6 +20,10 @@ Main page styles
   width: 100%;
   text-align: center;
 }
+.op{
+  padding: 0;
+  list-style-type:none;
+}
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
     only screen and (-moz-min-device-pixel-ratio: 2),

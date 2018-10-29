@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
     coursesCategory: any = [];
     courses: any = [];
     singleSelect: any = [];
+    c: any = [];
     title = 'app';
     tab = 1;
     config = {
@@ -178,7 +179,7 @@ export class HomeComponent implements OnInit {
       // console.log(this.model);
       let cityId, results;
       let z=0;
-      let c = [];
+      this.c = [];
       for(let i=0;i<this.cities.length;i++) {
          if(this.model === this.cities[i].description) {
             cityId = this.cities[i].id;
@@ -200,14 +201,14 @@ export class HomeComponent implements OnInit {
               this.o.numberOfWeeks<=this.courses[j].variant[0].duration.max) {
                 // console.log(this.courses[j].variant[0].duration); // number of weeks of the course
                 // console.log(this.courses[j]);
-                c[z] = this.courses[j];
+                this.c[z] = this.courses[j];
                 z++;
             }
           }
-          console.log(c);
+          console.log(this.c);
         } else {
-          c = this.courses;
-          console.log(c);
+          this.c = this.courses;
+          console.log(this.c);
         }
       }
     }

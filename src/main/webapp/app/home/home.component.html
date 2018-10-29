@@ -89,6 +89,15 @@
                   </div>
                </div>
             </div>
+            <div class="form-row col-md-12">
+              <div class="form-group col-md-12">
+               <ul class="op">
+                  <li *ngFor="let h of c">
+                       {{ h.name }} - {{h.institute.school.name}}
+                  </li>
+                </ul>
+              </div>
+            </div>
         </div>
         <div class="btn-div">
             <button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>
