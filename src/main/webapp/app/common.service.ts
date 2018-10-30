@@ -27,19 +27,6 @@ export class CommonService {
         return obj;
       });
   }*/
-  /*getResource(): any {
-    let data;
-    $.ajax({
-      crossDomain: true,
-      type: 'GET',
-      dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/integration/lifestudies/widget/olOICvdjKJAOaEIGtnEZRTsN/city?country=CA',
-      async: false,
-    }).done(function(resp) {
-        data = resp;
-    });
-    return data;
-  }*/
   // service to get all the cities
   getCities(): any {
     let data;
@@ -54,20 +41,6 @@ export class CommonService {
     });
     return data;
   }
-
-  /* getCourseCategories(): any {
-    let data;
-    $.ajax({
-      crossDomain: true,
-      type: 'GET',
-      dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/courseCategory?courseType=Language',
-      async: false,
-    }).done(function(resp) {
-        data = resp;
-    });
-    return data;
-  }*/
   // service to get all the course categories by course type
   getCourseCategoriesByCourseType(type): any {
     let data;
@@ -84,11 +57,17 @@ export class CommonService {
   }
   // service to get all the available courses
   getCourses(o): any {
-    // console.log(o);
+    console.log(o);
     let data = {};
     let url_;
-    url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course?courseType='+o.courseType+'&courseCategory='+
-    o.courseCategory+'&countryCode='+o.countryCode+'&city='+o.cityId+'&startDate='+o.startDate;
+    if(o.startDate!== undefined) {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course?courseType='+o.courseType+'&courseCategory='+
+      o.courseCategory+'&countryCode='+o.countryCode+'&city='+o.cityId+'&startDate='+o.startDate;
+    } else {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course?courseType='+o.courseType+'&courseCategory='+
+      o.courseCategory+'&countryCode='+o.countryCode+'&city='+o.cityId;
+    }
+
     // url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/o8f1ZipUW9i2wT2N8YOk0syV/course?courseType=Language&courseCategory=General&countryCode=CA&city=1';
     try {
       $.ajax({
@@ -104,5 +83,42 @@ export class CommonService {
 
     }
     return data;
+  }
+  getCoursePrice(courseId): any {
+    let data;
+    let price = 0;
+    let currency='';
+    const exchangeISO='COP';
+    let exchangePrice = 0;
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price',
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+        price = data.lines[0].regularPrice;
+        currency = data.lines[0].currency;
+        // console.log(price+' '+currency);
+
+    });
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency,
+      async: false,
+    }).done(function(resp) {
+        for(let i=0;i<resp.rates.length;i++) {
+
+           if(resp.rates[i].currency === exchangeISO) {
+              exchangePrice = Math.round(price * resp.rates[i].rate);
+              // console.log(exchangePrice);
+              break;
+           }
+        }
+    });
+    return exchangePrice;
   }
 }

@@ -6,9 +6,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+// import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
-import { SelectDropDownModule } from 'ngx-select-dropdown';
+// import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -41,8 +41,8 @@ import { UserComponent } from './user/user.component';
         TestEntityModule,
         FormsModule,
         NgbModule.forRoot(),
-        NgSelectModule,
-        SelectDropDownModule
+        // NgSelectModule,
+        // SelectDropDownModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, DashboardComponent, UserComponent],

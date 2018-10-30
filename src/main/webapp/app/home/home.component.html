@@ -3,13 +3,22 @@
         <span class="hipster img-fluid rounded"></span>
     </div>-->
     <div class="main">
+      <form name="form" (ngSubmit)="f1.form.valid && searchCourses(); f1.form.valid && c('Al guardar')" #f1="ngForm" novalidate>
         <!--<div>
           <div id="lead-widget"></div>
         </div>-->
         <div>
             <div class="form-row col-md-12">
               <div class="form-group col-md-12">
-                <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>
+                <label for="inputAddress">Ubicación (Ciudad)</label>
+                 <div class="input-group">
+                   <input id="typeahead-basic" type="text" id="location" name="location" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" required #location="ngModel"/>
+                </div>
+                <div *ngIf="location.invalid && ( (location.dirty || location.touched) || f1.submitted)" class="alert alert-danger">
+                  <div *ngIf="location.errors.required">
+                    La ubicación es requerida.
+                  </div>
+                </div>
                 <!--<label for="inputAddress">Ciudad</label>
                  <div class="input-group">
                     <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
@@ -50,30 +59,40 @@
                <div class="form-group col-md-3">
                  <label for="inputAddress">Tipo curso</label>
                   <div class="input-group">
-                    <select class="form-control" name="courseType" id="courseType" [(ngModel)]="o.courseType" #courseType="ngModel" (ngModelChange)="getCoursesCategories($event)">
+                    <select class="form-control" name="courseType" id="courseType" [(ngModel)]="o.courseType" #courseType="ngModel" required (ngModelChange)="getCoursesCategories($event)">
                       <option value="" disabled></option>
                       <option *ngFor="let c of coursesType" [ngValue]="c.id">
                         {{c.description}}
                       </option>
                     </select>
                   </div>
+                  <div *ngIf="courseType.invalid && ( (courseType.dirty || courseType.touched) || f1.submitted)" class="alert alert-danger">
+                    <div *ngIf="courseType.errors.required">
+                      El tipo de curso es requerido.
+                    </div>
+                  </div>
                </div>
                <div class="form-group col-md-3">
-                 <label for="inputAddress">Categorías</label>
+                 <label for="inputAddress">Categoría</label>
                   <div class="input-group">
-                    <select class="form-control" name="courseCategory" id="courseCategory" [(ngModel)]="o.courseCategory" #courseCategory="ngModel">
+                    <select class="form-control" name="courseCategory" id="courseCategory" [(ngModel)]="o.courseCategory" #courseCategory="ngModel" required>
                       <option value="" disabled></option>
                       <option *ngFor="let ct of coursesCategory" [ngValue]="ct.name">
                         {{ct.name}}
                       </option>
                     </select>
                   </div>
+                  <div *ngIf="courseCategory.invalid && ( (courseCategory.dirty || courseCategory.touched) || f1.submitted)" class="alert alert-danger">
+                    <div *ngIf="courseCategory.errors.required">
+                      La categoría es requerida.
+                    </div>
+                  </div>
                </div>
                <div class="form-group col-md-3">
                  <label>Fecha inicio</label>
                    <div class="input-group">
                      <span class="input-group-addon" (click)="d.toggle()" style="float:left;"><i class="icofont icofont-ui-calendar"></i></span>
-                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseStartDate" (keyup)="onKey()" #courseStartDate="ngModel"/>
+                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseStartDate" #courseStartDate="ngModel"/>
                      <!--<input type="text" class="form-control" placeholder="yyyy-mm-dd" id="date" name="date" [(ngModel)]="o.date" ngbDatepicker #d="ngbDatepicker" (keyup)="onKey()" #date"ngModel">-->
                    </div>
                </div>
@@ -89,18 +108,21 @@
                   </div>
                </div>
             </div>
-            <div class="form-row col-md-12">
-              <div class="form-group col-md-12">
-               <ul class="op">
-                  <li *ngFor="let h of c">
-                       {{ h.name }} - {{h.institute.school.name}}
-                  </li>
-                </ul>
-              </div>
-            </div>
         </div>
         <div class="btn-div">
-            <button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>
+            <!--<button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>-->
+            <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
         </div>
+        <div class="container">
+          <ul class="op">
+             <li *ngFor="let h of c">
+                  {{ h.name }} - {{h.institute.school.name}}
+             </li>
+           </ul>
+        </div>
+        <div [hidden]="hideSection">
+          No se encontraron resultados
+        </div>
+      </form>
     </div>
 </div>

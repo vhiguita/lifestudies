@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
     c: any = [];
     title = 'app';
     tab = 1;
+    hideSection: any = true;
     config = {
       displayKey: 'name', // if objects array passed which key to be displayed defaults to description
       search: true,
@@ -177,9 +178,10 @@ export class HomeComponent implements OnInit {
     }
     searchCourses() {
       // console.log(this.model);
+      this.c = [];
       let cityId, results;
       let z=0;
-      this.c = [];
+
       for(let i=0;i<this.cities.length;i++) {
          if(this.model === this.cities[i].description) {
             cityId = this.cities[i].id;
@@ -189,7 +191,12 @@ export class HomeComponent implements OnInit {
       // console.log(cityId);
       this.o.countryCode = this.model.slice(-2);
       this.o.cityId = cityId;
-      this.o.startDate = this.o.courseStartDate._i;
+      try {
+        this.o.startDate = this.o.courseStartDate._i;
+      } catch(err) {
+        this.o.startDate = undefined;
+      }
+
       // console.log(this.o);
       results = this.commonService.getCourses(this.o);
       if(results !== {}) {
@@ -202,13 +209,27 @@ export class HomeComponent implements OnInit {
                 // console.log(this.courses[j].variant[0].duration); // number of weeks of the course
                 // console.log(this.courses[j]);
                 this.c[z] = this.courses[j];
+                console.log(this.commonService.getCoursePrice(this.c[z].id));
                 z++;
             }
           }
           console.log(this.c);
+          if(this.c.length === 0) {
+            this.hideSection = false;
+          } else {
+            this.hideSection = true;
+          }
         } else {
           this.c = this.courses;
           console.log(this.c);
+          for(let j=0;j<this.c.length;j++) {
+                console.log(this.commonService.getCoursePrice(this.c[j].id));
+          }
+          if(this.c.length === 0) {
+            this.hideSection = false;
+          } else {
+            this.hideSection = true;
+          }
         }
       }
     }
