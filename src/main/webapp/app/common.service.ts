@@ -84,17 +84,67 @@ export class CommonService {
     }
     return data;
   }
-  getCoursePrice(courseId): any {
+  getCoursePrice_1(courseId,startDate): any {
     let data;
     let price = 0;
     let currency='';
     const exchangeISO='COP';
     let exchangePrice = 0;
+    let url_;
+    if(startDate!== undefined) {
+      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price';
+    } else {
+      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?startDate='+startDate;
+    }
+
     $.ajax({
       crossDomain: true,
       type: 'GET',
       dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price',
+      url: url_,
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+        price = data.lines[0].regularPrice;
+        currency = data.lines[0].currency;
+        // console.log(price+' '+currency);
+
+    });
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency,
+      async: false,
+    }).done(function(resp) {
+        for(let i=0;i<resp.rates.length;i++) {
+
+           if(resp.rates[i].currency === exchangeISO) {
+              exchangePrice = Math.round(price * resp.rates[i].rate);
+              // console.log(exchangePrice);
+              break;
+           }
+        }
+    });
+    return exchangePrice;
+  }
+  getCoursePrice_2(courseId, qty, startDate): any {
+    let data;
+    let price = 0;
+    let currency='';
+    const exchangeISO='COP';
+    let exchangePrice = 0;
+    let url_;
+    if(startDate!== undefined) {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty;
+    } else {
+      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty+'&startDate='+startDate;
+    }
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: url_,
       async: false,
     }).done(function(resp) {
         data = resp;

@@ -114,11 +114,19 @@
             <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
         </div>
         <div class="container">
-          <ul class="op">
-             <li *ngFor="let h of c">
-                  {{ h.name }} - {{h.institute.school.name}}
-             </li>
-           </ul>
+          <div *ngFor="let h of c">
+            <div class="item__image-area">
+             <div style="display:flex;align-items:center;margin:auto;height:150px;">
+              <img alt class="item_image" [src]="h.institute.featuredImageUri">
+             </div>
+            </div>
+            <div class="item__center">
+              <!--{{ h.name }} - {{h.institute.school.name}}-->
+                <p class="title">{{ h.name }}</p>
+            </div>
+            <div class="item__left">
+            </div>
+          </div>
         </div>
         <div [hidden]="hideSection">
           No se encontraron resultados

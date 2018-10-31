@@ -207,9 +207,20 @@ export class HomeComponent implements OnInit {
             if(this.o.numberOfWeeks>=this.courses[j].variant[0].duration.min&&
               this.o.numberOfWeeks<=this.courses[j].variant[0].duration.max) {
                 // console.log(this.courses[j].variant[0].duration); // number of weeks of the course
-                // console.log(this.courses[j]);
+
                 this.c[z] = this.courses[j];
-                console.log(this.commonService.getCoursePrice(this.c[z].id));
+                if(this.o.numberOfWeeks>1) {
+                  this.c[z].price = this.commonService.getCoursePrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate);
+                } else {
+                  this.c[z].price = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+                }
+
+                const imgUrl =this.courses[j].institute.featuredImageUri;
+
+                if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                  this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
+                }
+                // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
             }
           }
@@ -223,7 +234,13 @@ export class HomeComponent implements OnInit {
           this.c = this.courses;
           console.log(this.c);
           for(let j=0;j<this.c.length;j++) {
-                console.log(this.commonService.getCoursePrice(this.c[j].id));
+              this.c[z].price = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+              const imgUrl =this.courses[j].institute.featuredImageUri;
+              if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
+              }
+              // console.log(this.courses[j].institute.featuredImageUri);
+              // console.log(this.commonService.getCoursePrice(this.c[j].id));
           }
           if(this.c.length === 0) {
             this.hideSection = false;
