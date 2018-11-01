@@ -57,7 +57,7 @@ export class CommonService {
   }
   // service to get all the available courses
   getCourses(o): any {
-    console.log(o);
+    // console.log(o);
     let data = {};
     let url_;
     if(o.startDate!== undefined) {
@@ -91,12 +91,12 @@ export class CommonService {
     const exchangeISO='COP';
     let exchangePrice = 0;
     let url_;
-    if(startDate!== undefined) {
-      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price';
+    if(startDate === undefined) {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price';
     } else {
-      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?startDate='+startDate;
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?startDate='+startDate;
     }
-
+    // console.log(url_);
     $.ajax({
       crossDomain: true,
       type: 'GET',
@@ -105,26 +105,28 @@ export class CommonService {
       async: false,
     }).done(function(resp) {
         data = resp;
-        price = data.lines[0].regularPrice;
+        price = data.lines[0].total;
         currency = data.lines[0].currency;
         // console.log(price+' '+currency);
 
     });
+    const url1= 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency;
+    // console.log(url1);
     $.ajax({
       crossDomain: true,
       type: 'GET',
       dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency,
+      url: url1,
       async: false,
     }).done(function(resp) {
-        for(let i=0;i<resp.rates.length;i++) {
-
+        const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
+        exchangePrice = Math.round(price * rateObj[0].rate);
+        /*for(let i=0;i<resp.rates.length;i++) {
            if(resp.rates[i].currency === exchangeISO) {
               exchangePrice = Math.round(price * resp.rates[i].rate);
-              // console.log(exchangePrice);
               break;
            }
-        }
+        }*/
     });
     return exchangePrice;
   }
@@ -135,10 +137,10 @@ export class CommonService {
     const exchangeISO='COP';
     let exchangePrice = 0;
     let url_;
-    if(startDate!== undefined) {
+    if(startDate === undefined) {
       url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty;
     } else {
-      url_ = 'https://server.book;andlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty+'&startDate='+startDate;
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty+'&startDate='+startDate;
     }
     $.ajax({
       crossDomain: true,
@@ -148,26 +150,29 @@ export class CommonService {
       async: false,
     }).done(function(resp) {
         data = resp;
-        price = data.lines[0].regularPrice;
+        price = data.lines[0].total;
         currency = data.lines[0].currency;
         // console.log(price+' '+currency);
 
     });
+    const url1= 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency;
+    // console.log(url1);
     $.ajax({
       crossDomain: true,
       type: 'GET',
       dataType: 'json',
-      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency,
+      url: url1,
       async: false,
     }).done(function(resp) {
-        for(let i=0;i<resp.rates.length;i++) {
-
+      const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
+      exchangePrice = Math.round(price * rateObj[0].rate);
+        /*for(let i=0;i<resp.rates.length;i++) {
            if(resp.rates[i].currency === exchangeISO) {
               exchangePrice = Math.round(price * resp.rates[i].rate);
               // console.log(exchangePrice);
               break;
            }
-        }
+        }*/
     });
     return exchangePrice;
   }

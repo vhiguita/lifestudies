@@ -26,8 +26,10 @@ export class HomeComponent implements OnInit {
     singleSelect: any = [];
     c: any = [];
     title = 'app';
+    cl ='container_1';
     tab = 1;
     hideSection: any = true;
+    hideSection_: any = true;
     config = {
       displayKey: 'name', // if objects array passed which key to be displayed defaults to description
       search: true,
@@ -176,9 +178,31 @@ export class HomeComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
+    /* getPrice(id) {
+      let price;
+      if(this.o.numberOfWeeks!== undefined) {
+          if(this.o.numberOfWeeks>1) {
+            price = this.commonService.getCoursePrice_2(id, this.o.numberOfWeeks, this.o.startDate);
+          } else {
+            price = this.commonService.getCoursePrice_1(id, this.o.startDate);
+          }
+      } else {
+         price = this.commonService.getCoursePrice_1(id, this.o.startDate);
+      }
+      console.log(price);
+      return price;
+    }
+    getImageUrl(imgUrl) {
+      if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+        imgUrl = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
+      }
+      return imgUrl;
+    }*/
     searchCourses() {
       // console.log(this.model);
+      this.c.length = 0;
       this.c = [];
+      this.cl ='container_2';
       let cityId, results;
       let z=0;
 
@@ -210,9 +234,9 @@ export class HomeComponent implements OnInit {
 
                 this.c[z] = this.courses[j];
                 if(this.o.numberOfWeeks>1) {
-                  this.c[z].price = this.commonService.getCoursePrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate);
+                  this.c[z].coursePrice= this.commonService.getCoursePrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate);
                 } else {
-                  this.c[z].price = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+                  this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
                 }
 
                 const imgUrl =this.courses[j].institute.featuredImageUri;
@@ -220,32 +244,42 @@ export class HomeComponent implements OnInit {
                 if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
                   this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
                 }
+                // console.log(this.c[z].price);
                 // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
             }
           }
-          console.log(this.c);
+          // console.log(this.c);
           if(this.c.length === 0) {
             this.hideSection = false;
+            this.hideSection_ = true;
+            // this.cl ='container_1';
           } else {
             this.hideSection = true;
+            this.hideSection_ = false;
+            // this.cl ='container_2';
           }
         } else {
           this.c = this.courses;
-          console.log(this.c);
+
           for(let j=0;j<this.c.length;j++) {
-              this.c[z].price = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+              this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
               const imgUrl =this.courses[j].institute.featuredImageUri;
               if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
                 this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
               }
-              // console.log(this.courses[j].institute.featuredImageUri);
-              // console.log(this.commonService.getCoursePrice(this.c[j].id));
+              // console.log(this.c[z].coursePrice);
+              z++;
           }
+          console.log(this.c);
           if(this.c.length === 0) {
             this.hideSection = false;
+            this.hideSection_ = true;
+            //  this.cl ='container_1';
           } else {
             this.hideSection = true;
+            this.hideSection_ = false;
+            // this.cl ='container_2';
           }
         }
       }

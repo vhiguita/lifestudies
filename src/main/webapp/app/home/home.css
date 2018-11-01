@@ -36,7 +36,7 @@ Main page styles
 }
 .item_image{
   top: 0;
-  width: 100%;
+  width: 90%;
   height: 120px;
   left: 0;
   -webkit-transition: -webkit-transform .3s;
@@ -46,21 +46,26 @@ Main page styles
   margin:auto;
 }
 .item__center{
-  width: 50%;
+  width: 60%;
   float:left;
   height: 150px;
   /*background-color: yellow;*/
 }
 .item__left{
-  width: 30%;
+  width: 20%;
   float:left;
   height: 150px;
   /*background-color: red;*/
 }
-.container{
-  /*display: -webkit-flex;
-  display: flex;
-  border-radius: 25px;*/
+.container_1{
+  border: 1px solid #585656;
+  /*min-width: 900px;*/
+  width: 100%;
+  height:auto;
+  margin:auto;
+  float:left;
+}
+.container_2{
   border: 1px solid #585656;
   width: 100%;
   height: auto;
@@ -69,6 +74,11 @@ Main page styles
   font-family: "Lora", serif;
   font-size: 18px;
   font-weight: bold;
+  margin-top: 10px;
+}
+.title_1{
+  font-family: "Lora", serif;
+  font-size: 14px;
   margin-top: 10px;
 }
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -81,4 +91,28 @@ Main page styles
         background: url('../../content/images/hipster2x.png') no-repeat center top;
         background-size: contain;
     }
+}
+@media screen and (max-width: 414px) {
+  .item__image-area{
+    width: 50%;
+  }
+  .item__center{
+    width: 50%;
+    float:left;
+    height: 100px;
+  }
+  .item__left{
+    width: 50%;
+    float:right;
+    height: 50px;
+  }
+  .title{
+    font-size: 15px;
+  }
+  .title_1{
+    font-size: 12px;
+  }
+  .container_1{
+    /*float:none;*/
+  }
 }
