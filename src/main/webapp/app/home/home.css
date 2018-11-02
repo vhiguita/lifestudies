@@ -20,9 +20,66 @@ Main page styles
   width: 100%;
   text-align: center;
 }
-.op{
-  padding: 0;
-  list-style-type:none;
+.item__wrapper {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.item__wrapper {
+    width: 100%;
+}
+.item__image-area{
+  width: 20%;
+  float:left;
+  height:150px;
+  /*background-color: green;*/
+}
+.item_image{
+  top: 0;
+  width: 90%;
+  height: 120px;
+  left: 0;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s,-webkit-transform .3s;
+  margin:auto;
+}
+.item__center{
+  width: 60%;
+  float:left;
+  height: 150px;
+  /*background-color: yellow;*/
+}
+.item__left{
+  width: 20%;
+  float:left;
+  height: 150px;
+  /*background-color: red;*/
+}
+.container_1{
+  border: 1px solid #585656;
+  /*min-width: 900px;*/
+  width: 100%;
+  height:auto;
+  margin:auto;
+  float:left;
+}
+.container_2{
+  border: 1px solid #585656;
+  width: 100%;
+  height: auto;
+}
+.title{
+  font-family: "Lora", serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.title_1{
+  font-family: "Lora", serif;
+  font-size: 14px;
+  margin-top: 10px;
 }
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
@@ -34,4 +91,28 @@ Main page styles
         background: url('../../content/images/hipster2x.png') no-repeat center top;
         background-size: contain;
     }
+}
+@media screen and (max-width: 414px) {
+  .item__image-area{
+    width: 50%;
+  }
+  .item__center{
+    width: 50%;
+    float:left;
+    height: 100px;
+  }
+  .item__left{
+    width: 50%;
+    float:right;
+    height: 50px;
+  }
+  .title{
+    font-size: 15px;
+  }
+  .title_1{
+    font-size: 12px;
+  }
+  .container_1{
+    /*float:none;*/
+  }
 }

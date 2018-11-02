@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -30,7 +31,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private registerService: Register,
         private commonService: CommonService,
         private elementRef: ElementRef,
-        private renderer: Renderer
+        private renderer: Renderer,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -74,5 +76,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         } else {
             this.error = 'ERROR';
         }
+    }
+    login() {
+        // this.activeModal.dismiss('to state register');
+        this.router.navigate(['/loginaccount']);
     }
 }

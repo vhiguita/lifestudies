@@ -11,7 +11,8 @@ img {
 }
 
 .jh-navbar {
-    background-color: #353d47;
+    /*background-color: #353d47;*/
+    background-color: #FFF;
     padding: 0.2em 1em;
 }
 
@@ -42,6 +43,7 @@ img {
 
 .jh-navbar a.nav-link {
     font-weight: 400;
+    color: rgb(150,150,150)!important;
 }
 
 .jh-navbar .jh-navbar-toggler {
@@ -63,6 +65,9 @@ img {
 @media screen and (max-width: 992px) {
     .jh-logo-container {
         width: 100%;
+    }
+    img {
+        width: 80px;
     }
 }
 
