@@ -28,6 +28,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
 import {CommonService} from './common.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
+// import { IndexComponent } from './index/index.component';
+import { TestIndexModule } from './index/index.module';
 
 @NgModule({
     imports: [
@@ -37,6 +39,7 @@ import { UserComponent } from './user/user.component';
         TestSharedModule,
         TestCoreModule,
         TestHomeModule,
+        TestIndexModule,
         TestAccountModule,
         TestEntityModule,
         FormsModule,

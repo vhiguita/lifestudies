@@ -176,4 +176,17 @@ export class CommonService {
     });
     return exchangePrice;
   }
+  getInstituteInfo(instituteId): any {
+    let data;
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/institute/'+instituteId,
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+    });
+    return data;
+  }
 }
