@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit {
     cities: any = [];
     citiesAux: any = [];
     citiesBuffer: any = [];
+    currencies: any = [{id:'COP',description:'Peso'},
+    {id:'USD',description:'Dólar'},
+    {id:'EUR',description:'Euro'}];
     coursesType: any = [{id:'Language',description:'Idiomas'},
     {id:'SummerCamp',description:'SummerCamp'},
     {id:'WorkExperience',description:'Experiencia Laboral'},
@@ -177,6 +180,9 @@ export class HomeComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+    getInstituteInfo(instituteId) {
+      return this.commonService.getInstituteInfo(instituteId);
     }
     /* getPrice(id) {
       let price;

@@ -109,6 +109,24 @@
                </div>
             </div>
         </div>
+        <div class="form-row col-md-12">
+           <div class="form-group col-md-3">
+             <label for="inputAddress">Moneda</label>
+              <div class="input-group">
+                <select class="form-control" name="currency" id="currency" [(ngModel)]="o.currency" #currency="ngModel" required>
+                  <option value="" disabled></option>
+                  <option *ngFor="let c of currencies" [ngValue]="c.id">
+                    {{c.description}}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="currency.invalid && ( (currency.dirty || currency.touched) || f1.submitted)" class="alert alert-danger">
+                <div *ngIf="currency.errors.required">
+                  La moneda es requerida.
+                </div>
+              </div>
+           </div>
+        </div>
         <div class="btn-div">
             <!--<button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>-->
             <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
