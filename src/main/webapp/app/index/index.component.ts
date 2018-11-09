@@ -169,7 +169,7 @@ export class IndexComponent implements OnInit {
   }*/
   searchCourses() {
     // console.log(this.model);
-    this.c.length = 0;
+    /*this.c.length = 0;
     this.c = [];
     this.cl ='container_2';
     let cityId, results;
@@ -251,7 +251,7 @@ export class IndexComponent implements OnInit {
           // this.cl ='container_2';
         }
       }
-    }
+    }*/
   }
 
 }

@@ -76,6 +76,21 @@ Main page styles
   font-weight: bold;
   margin-top: 10px;
 }
+.text-total{
+  font-family: "Lora", serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  color:green;
+}
+.text-regular{
+  font-family: "Lora", serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration:line-through;
+  color:red;
+}
 .title_1{
   font-family: "Lora", serif;
   font-size: 14px;

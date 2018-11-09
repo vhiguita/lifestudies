@@ -143,7 +143,9 @@
                 <p class="title_1"> {{h.institute.school.name}}</p>
             </div>
             <div class="item__left">
-                <p class="title">${{h.coursePrice | number}}</p>
+                <p class="text-regular">${{h.courseRegularPrice | number}}</p>
+                <p class="text-total">${{h.coursePrice | number}}</p>
+
                 <!--<p>${{getPrice(h.id) | number}}-->
 
             </div>

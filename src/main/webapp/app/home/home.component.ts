@@ -38,9 +38,7 @@ export class HomeComponent implements OnInit {
     cities: any = [];
     citiesAux: any = [];
     citiesBuffer: any = [];
-    currencies: any = [{id:'COP',description:'Peso'},
-    {id:'USD',description:'Dólar'},
-    {id:'EUR',description:'Euro'}];
+    currencies: any = [];
     coursesType: any = [{id:'Language',description:'Idiomas'},
     {id:'SummerCamp',description:'SummerCamp'},
     {id:'WorkExperience',description:'Experiencia Laboral'},
@@ -97,6 +95,10 @@ export class HomeComponent implements OnInit {
       private eventManager: JhiEventManager) {}
 
     ngOnInit() {
+      this.currencies = [{id:'COP',description:'Peso Colombiano (COP)'},
+      {id:'USD',description:'Dólar Estadounidense (USD)'},
+      {id:'EUR',description:'Euro (EUR)'}];
+
         this.principal.identity().then(account => {
             this.account = account;
         });
@@ -227,7 +229,7 @@ export class HomeComponent implements OnInit {
         this.o.startDate = undefined;
       }
 
-      // console.log(this.o);
+      console.log(this.o);
       results = this.commonService.getCourses(this.o);
       if(results !== {}) {
         this.courses =results.resourceList;
@@ -239,10 +241,13 @@ export class HomeComponent implements OnInit {
                 // console.log(this.courses[j].variant[0].duration); // number of weeks of the course
 
                 this.c[z] = this.courses[j];
+                // this.c[z].currency = this.o.currency;
                 if(this.o.numberOfWeeks>1) {
-                  this.c[z].coursePrice= this.commonService.getCoursePrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate);
+                  this.c[z].coursePrice= this.commonService.getCoursePrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate, this.o.currency);
+                  this.c[z].courseRegularPrice= this.commonService.getCourseRegularPrice_2(this.c[z].id, this.o.numberOfWeeks, this.o.startDate, this.o.currency);
                 } else {
-                  this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+                  this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate, this.o.currency);
+                  this.c[z].courseRegularPrice= this.commonService.getCourseRegularPrice_1(this.c[z].id, this.o.startDate, this.o.currency);
                 }
 
                 const imgUrl =this.courses[j].institute.featuredImageUri;
@@ -250,6 +255,8 @@ export class HomeComponent implements OnInit {
                 if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
                   this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
                 }
+                const instituteId = this.courses[j].institute.id;
+                this.getInstituteInfo(instituteId);
                 // console.log(this.c[z].price);
                 // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
@@ -269,11 +276,15 @@ export class HomeComponent implements OnInit {
           this.c = this.courses;
 
           for(let j=0;j<this.c.length;j++) {
-              this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate);
+              // this.c[z].currency = this.o.currency;
+              this.c[z].coursePrice = this.commonService.getCoursePrice_1(this.c[z].id, this.o.startDate, this.o.currency);
+              this.c[z].courseRegularPrice= this.commonService.getCourseRegularPrice_1(this.c[z].id, this.o.startDate, this.o.currency);
               const imgUrl =this.courses[j].institute.featuredImageUri;
               if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
                 this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
               }
+              const instituteId = this.courses[j].institute.id;
+              this.getInstituteInfo(instituteId);
               // console.log(this.c[z].coursePrice);
               z++;
           }
