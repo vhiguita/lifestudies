@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
     citiesAux: any = [];
     citiesBuffer: any = [];
     currencies: any = [];
+    filters: any = [];
     coursesType: any = [{id:'Language',description:'Idiomas'},
     {id:'SummerCamp',description:'SummerCamp'},
     {id:'WorkExperience',description:'Experiencia Laboral'},
@@ -98,6 +99,8 @@ export class HomeComponent implements OnInit {
       this.currencies = [{id:'COP',description:'Peso Colombiano (COP)'},
       {id:'USD',description:'Dólar Estadounidense (USD)'},
       {id:'EUR',description:'Euro (EUR)'}];
+      this.filters = [{id:1,description:'Menor precio'},
+      {id:2,description:'Mayor precio'},{id:3,description:'Por curso'}];
 
         this.principal.identity().then(account => {
             this.account = account;
@@ -124,6 +127,27 @@ export class HomeComponent implements OnInit {
           map(term => term.length < 2 ? []
             : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
         );
+        const Numbers =[3160,1024,2050,8081,1100,2210];
+        let tmp: any = [];
+        /*for(let i=0;i<Numbers.length;i++) {
+          for(let j = 0;j<Numbers.length;j++) {
+            if(Numbers[j]>Numbers[j+1]) {
+              tmp = Numbers[j];
+              Numbers[j] = Numbers[j + 1];
+              Numbers[j + 1] = tmp;
+            }
+          }
+        }*/
+        for(let i=0;i<Numbers.length;i++) {
+          for(let j = 0;j<Numbers.length;j++) {
+            if(Numbers[j]<Numbers[j+1]) {
+              tmp = Numbers[j];
+              Numbers[j] = Numbers[j + 1];
+              Numbers[j + 1] = tmp;
+            }
+          }
+        }
+        console.log(Numbers);
     }
     /*private get disabledV():string {
       return this._disabledV;
@@ -167,6 +191,35 @@ export class HomeComponent implements OnInit {
       this.o.courseCategory = null;
       this.coursesCategory = this.commonService.getCourseCategoriesByCourseType(e).resourceList;
       // console.log(this.coursesCategory);
+    }
+    orderCoursesBy(e): void {
+      console.log(e);
+      console.log(this.c[0].coursePrice);
+      // let tmp: any = [];
+      if(e===1) {
+        console.log('menor precio.');
+        /*for(let i=0;i<Numbers.length;i++) {
+          for(let j = 0;j<Numbers.length;j++) {
+            if(Numbers[j]>Numbers[j+1]) {
+              tmp = Numbers[j];
+              Numbers[j] = Numbers[j + 1];
+              Numbers[j + 1] = tmp;
+            }
+          }
+        }*/
+      }
+      if(e===2) {
+        console.log('mayor precio.');
+        /*for(let i=0;i<Numbers.length;i++) {
+          for(let j = 0;j<Numbers.length;j++) {
+            if(Numbers[j]<Numbers[j+1]) {
+              tmp = Numbers[j];
+              Numbers[j] = Numbers[j + 1];
+              Numbers[j + 1] = tmp;
+            }
+          }
+        } */
+      }
     }
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', message => {
@@ -256,7 +309,8 @@ export class HomeComponent implements OnInit {
                   this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
                 }
                 const instituteId = this.courses[j].institute.id;
-                this.getInstituteInfo(instituteId);
+                // this.getInstituteInfo(instituteId);
+                this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
                 // console.log(this.c[z].price);
                 // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
@@ -284,7 +338,8 @@ export class HomeComponent implements OnInit {
                 this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
               }
               const instituteId = this.courses[j].institute.id;
-              this.getInstituteInfo(instituteId);
+              this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
+              // this.getInstituteInfo(instituteId);
               // console.log(this.c[z].coursePrice);
               z++;
           }
