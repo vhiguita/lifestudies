@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
     tab = 1;
     hideSection: any = true;
     hideSection_: any = true;
+    hideLoader: any = true;
     config = {
       displayKey: 'name', // if objects array passed which key to be displayed defaults to description
       search: true,
@@ -128,54 +129,27 @@ export class HomeComponent implements OnInit {
             : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
         );
         const Numbers =[3160,1024,2050,8081,1100,2210];
-        let tmp: any = [];
-        /*for(let i=0;i<Numbers.length;i++) {
-          for(let j = 0;j<Numbers.length;j++) {
-            if(Numbers[j]>Numbers[j+1]) {
-              tmp = Numbers[j];
-              Numbers[j] = Numbers[j + 1];
-              Numbers[j + 1] = tmp;
-            }
-          }
-        }*/
-        for(let i=0;i<Numbers.length;i++) {
-          for(let j = 0;j<Numbers.length;j++) {
-            if(Numbers[j]<Numbers[j+1]) {
-              tmp = Numbers[j];
-              Numbers[j] = Numbers[j + 1];
-              Numbers[j + 1] = tmp;
-            }
-          }
+        // let tmp: any = [];
+        /*for (let i = 0; i < Numbers.length; i++) {
+         for (let j = 1; j < (Numbers.length - i); j++) {
+             if (Numbers[j - 1] > Numbers[j]) {
+                 tmp = Numbers[j - 1];
+                 Numbers[j - 1] = Numbers[j];
+                 Numbers[j] = tmp;
+             }
+         }
         }
+        for (let x = 0; x < Numbers.length; x++) {
+         for (let i = 0; i < Numbers.length-x-1; i++) {
+             if(Numbers[i] < Numbers[i+1]){
+                 tmp = Numbers[i+1];
+                 Numbers[i+1] = Numbers[i];
+                 Numbers[i] = tmp;
+             }
+         }
+       }*/
         console.log(Numbers);
     }
-    /*private get disabledV():string {
-      return this._disabledV;
-    }
-
-    private set disabledV(value:string) {
-      this._disabledV = value;
-      this.disabled = this._disabledV === '1';
-    }
-
-    public selected(value:any):void {
-      console.log('Selected value is: ', value);
-    }
-
-    public removed(value:any):void {
-      console.log('Removed value is: ', value);
-    }
-
-    public typed(value:any):void {
-      console.log('New search input: ', value);
-    }
-
-    public refreshValue(value:any):void {
-      this.value = value;
-    }
-    changeValue($event: any) {
-      console.log($event);
-    }*/
     fetchMore() {
       const len = this.citiesBuffer.length;
       const more = this.cities.slice(len, this.bufferSize + len);
@@ -193,33 +167,34 @@ export class HomeComponent implements OnInit {
       // console.log(this.coursesCategory);
     }
     orderCoursesBy(e): void {
-      console.log(e);
-      console.log(this.c[0].coursePrice);
-      // let tmp: any = [];
+      // console.log(e);
+      // console.log(this.c[0].coursePrice);
+       let tmp: any = [];
       if(e===1) {
-        console.log('menor precio.');
-        /*for(let i=0;i<Numbers.length;i++) {
-          for(let j = 0;j<Numbers.length;j++) {
-            if(Numbers[j]>Numbers[j+1]) {
-              tmp = Numbers[j];
-              Numbers[j] = Numbers[j + 1];
-              Numbers[j + 1] = tmp;
-            }
-          }
-        }*/
+        // console.log('menor precio.');
+        for (let i = 0; i < this.c.length; i++) {
+         for (let j = 1; j < (this.c.length - i); j++) {
+           if (this.c[j - 1].coursePrice > this.c[j].coursePrice) {
+               tmp = this.c[j - 1];
+               this.c[j - 1] = this.c[j];
+               this.c[j] = tmp;
+           }
+         }
+        }
       }
       if(e===2) {
-        console.log('mayor precio.');
-        /*for(let i=0;i<Numbers.length;i++) {
-          for(let j = 0;j<Numbers.length;j++) {
-            if(Numbers[j]<Numbers[j+1]) {
-              tmp = Numbers[j];
-              Numbers[j] = Numbers[j + 1];
-              Numbers[j + 1] = tmp;
-            }
-          }
-        } */
+        // console.log('mayor precio.');
+        for (let x = 0; x < this.c.length; x++) {
+         for (let i = 0; i < this.c.length-x-1; i++) {
+             if(this.c[i].coursePrice < this.c[i+1].coursePrice) {
+                 tmp = this.c[i+1];
+                 this.c[i+1] = this.c[i];
+                 this.c[i] = tmp;
+             }
+         }
+        }
       }
+      console.log(this.c);
     }
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', message => {
@@ -239,26 +214,6 @@ export class HomeComponent implements OnInit {
     getInstituteInfo(instituteId) {
       return this.commonService.getInstituteInfo(instituteId);
     }
-    /* getPrice(id) {
-      let price;
-      if(this.o.numberOfWeeks!== undefined) {
-          if(this.o.numberOfWeeks>1) {
-            price = this.commonService.getCoursePrice_2(id, this.o.numberOfWeeks, this.o.startDate);
-          } else {
-            price = this.commonService.getCoursePrice_1(id, this.o.startDate);
-          }
-      } else {
-         price = this.commonService.getCoursePrice_1(id, this.o.startDate);
-      }
-      console.log(price);
-      return price;
-    }
-    getImageUrl(imgUrl) {
-      if(imgUrl.includes('https://bookandlearn.s3.amazonaws.com') === false) {
-        imgUrl = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
-      }
-      return imgUrl;
-    }*/
     searchCourses() {
       // console.log(this.model);
       this.c.length = 0;
@@ -317,6 +272,10 @@ export class HomeComponent implements OnInit {
             }
           }
           // console.log(this.c);
+          if(this.o.order!== undefined) {
+            console.log(this.o.order);
+            this.orderCoursesBy(this.o.order);
+          }
           if(this.c.length === 0) {
             this.hideSection = false;
             this.hideSection_ = true;
@@ -343,7 +302,11 @@ export class HomeComponent implements OnInit {
               // console.log(this.c[z].coursePrice);
               z++;
           }
-          console.log(this.c);
+          // console.log(this.c);
+          if(this.o.order!== undefined) {
+            console.log(this.o.order);
+            this.orderCoursesBy(this.o.order);
+          }
           if(this.c.length === 0) {
             this.hideSection = false;
             this.hideSection_ = true;

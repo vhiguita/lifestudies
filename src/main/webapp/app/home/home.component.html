@@ -142,6 +142,7 @@
             <!--<button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>-->
             <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
         </div>
+        <div class="loader" [hidden]="hideLoader"></div>
         <div class="container_1" [hidden]="hideSection_">
           <div *ngFor="let h of c">
             <div class="item__image-area">
