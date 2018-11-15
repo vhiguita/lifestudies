@@ -84,11 +84,11 @@ export class CommonService {
     }
     return data;
   }
-  getCoursePrice_1(courseId,startDate): any {
+  getCoursePrice_1(courseId,startDate,exchangeISO): any {
     let data;
     let price = 0;
     let currency='';
-    const exchangeISO='COP';
+    // const exchangeISO='COP';
     let exchangePrice = 0;
     let url_;
     if(startDate === undefined) {
@@ -130,11 +130,57 @@ export class CommonService {
     });
     return exchangePrice;
   }
-  getCoursePrice_2(courseId, qty, startDate): any {
+  getCourseRegularPrice_1(courseId,startDate,exchangeISO): any {
     let data;
     let price = 0;
     let currency='';
-    const exchangeISO='COP';
+    // const exchangeISO='COP';
+    let exchangePrice = 0;
+    let url_;
+    if(startDate === undefined) {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price';
+    } else {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?startDate='+startDate;
+    }
+    // console.log(url_);
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: url_,
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+        price = data.lines[0].regularPrice;
+        currency = data.lines[0].currency;
+        // console.log(price+' '+currency);
+
+    });
+    const url1= 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency;
+    // console.log(url1);
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: url1,
+      async: false,
+    }).done(function(resp) {
+        const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
+        exchangePrice = Math.round(price * rateObj[0].rate);
+        /*for(let i=0;i<resp.rates.length;i++) {
+           if(resp.rates[i].currency === exchangeISO) {
+              exchangePrice = Math.round(price * resp.rates[i].rate);
+              break;
+           }
+        }*/
+    });
+    return exchangePrice;
+  }
+  getCoursePrice_2(courseId, qty, startDate, exchangeISO): any {
+    let data;
+    let price = 0;
+    let currency='';
+    // const exchangeISO='COP';
     let exchangePrice = 0;
     let url_;
     if(startDate === undefined) {
@@ -175,5 +221,66 @@ export class CommonService {
         }*/
     });
     return exchangePrice;
+  }
+  getCourseRegularPrice_2(courseId, qty, startDate, exchangeISO): any {
+    let data;
+    let price = 0;
+    let currency='';
+    // const exchangeISO='COP';
+    let exchangePrice = 0;
+    let url_;
+    if(startDate === undefined) {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty;
+    } else {
+      url_ = 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/price?qty='+qty+'&startDate='+startDate;
+    }
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: url_,
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+        price = data.lines[0].regularPrice;
+        currency = data.lines[0].currency;
+        // console.log(price+' '+currency);
+
+    });
+    const url1= 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/currencyRates/'+currency;
+    // console.log(url1);
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: url1,
+      async: false,
+    }).done(function(resp) {
+      const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
+      exchangePrice = Math.round(price * rateObj[0].rate);
+        /*for(let i=0;i<resp.rates.length;i++) {
+           if(resp.rates[i].currency === exchangeISO) {
+              exchangePrice = Math.round(price * resp.rates[i].rate);
+              // console.log(exchangePrice);
+              break;
+           }
+        }*/
+    });
+    return exchangePrice;
+  }
+  getInstituteInfo(instituteId): any {
+    let data;
+    $.ajax({
+      crossDomain: true,
+      type: 'GET',
+      dataType: 'json',
+      url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/institute/'+instituteId,
+      async: false,
+    }).done(function(resp) {
+        data = resp;
+    });
+    // console.log('--- institute info ---');
+    // console.log(data);
+    return data;
   }
 }

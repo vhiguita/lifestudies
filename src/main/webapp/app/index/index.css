@@ -76,48 +76,11 @@ Main page styles
   font-weight: bold;
   margin-top: 10px;
 }
-.text-total{
-  font-family: "Lora", serif;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
-  color:green;
-}
-.text-regular{
-  font-family: "Lora", serif;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
-  text-decoration:line-through;
-  color:red;
-}
 .title_1{
   font-family: "Lora", serif;
   font-size: 14px;
   margin-top: 10px;
 }
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 80px;
-  height: 80px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-  margin:auto;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
     only screen and (-moz-min-device-pixel-ratio: 2),

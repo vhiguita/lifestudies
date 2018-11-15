@@ -69,7 +69,8 @@ export class LoginaccountComponent implements OnInit, AfterViewInit {
               // previousState was set in the authExpiredInterceptor before being redirected to login modal.
               // since login is succesful, go to stored previousState and clear previousState
               const redirect = this.stateStorageService.getUrl();
-              this.router.navigate(['/']);
+              // this.router.navigate(['/']);
+              this.router.navigate(['/index']);
               /*alert(redirect);
               if (redirect) {
                   this.stateStorageService.storeUrl(null);

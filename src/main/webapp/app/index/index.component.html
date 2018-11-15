@@ -19,40 +19,6 @@
                     La ubicación es requerida.
                   </div>
                 </div>
-                <!--<label for="inputAddress">Ciudad</label>
-                 <div class="input-group">
-                    <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
-                    <ng-select [allowClear]="true"
-                    [items]="items"
-                    [disabled]="disabled"
-                    (data)="refreshValue($event)"
-                    (selected)="selected($event)"
-                    (removed)="removed($event)"
-                    (typed)="typed($event)"
-                    placeholder="No city selected">
-                   </ng-select>
-                <ng-select class="custom" [items]="cities"
-                 [virtualScroll]="true"
-                 [loading]="loading"
-                 bindLabel="description"
-                 bindValue="id"
-                 placeholder=""
-                 [(ngModel)]="o.cityId"
-                 (scrollToEnd)="fetchMore($event)" ngDefaultControl>
-                 <ng-template ng-header-tmp>
-                    <small class="form-text text-muted">{{citiesBuffer.length}} de {{cities.length}}</small>
-                 </ng-template>
-                 <ng-template ng-option-tmp let-item="item" let-index="index">
-                   {{item.description}}
-                </ng-template>
-              </ng-select>-->
-                <!--<input class="form-control" type="text" [(ngModel)]="term">
-                <div *ngFor = "let item of cities |filter:term" >
-                  <p>
-                    {{item.description}}
-                  </p>
-                </div>
-                </div>-->
               </div>
             </div>
             <div class="form-row col-md-12">
@@ -126,23 +92,11 @@
                 </div>
               </div>
            </div>
-           <div class="form-group col-md-3">
-             <label for="inputAddress">Ordernar por</label>
-              <div class="input-group">
-                <select class="form-control" name="orderby" id="orderby" [(ngModel)]="o.order" #order="ngModel" (ngModelChange)="orderCoursesBy($event)">
-                  <option value="" disabled></option>
-                  <option *ngFor="let o of filters" [ngValue]="o.id">
-                    {{o.description}}
-                  </option>
-                </select>
-              </div>
-           </div>
         </div>
         <div class="btn-div">
             <!--<button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>-->
             <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
         </div>
-        <div class="loader" [hidden]="hideLoader"></div>
         <div class="container_1" [hidden]="hideSection_">
           <div *ngFor="let h of c">
             <div class="item__image-area">
@@ -155,9 +109,7 @@
                 <p class="title_1"> {{h.institute.school.name}}</p>
             </div>
             <div class="item__left">
-                <p class="text-regular">${{h.courseRegularPrice | number}}</p>
-                <p class="text-total">${{h.coursePrice | number}}</p>
-
+                <p class="title">${{h.coursePrice | number}}</p>
                 <!--<p>${{getPrice(h.id) | number}}-->
 
             </div>
