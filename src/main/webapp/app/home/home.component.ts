@@ -216,6 +216,9 @@ export class HomeComponent implements OnInit {
     }
     searchCourses() {
       // console.log(this.model);
+      this.hideLoader = false;
+      this.hideSection_ = true;
+      setTimeout(() => {
       this.c.length = 0;
       this.c = [];
       this.cl ='container_2';
@@ -318,5 +321,7 @@ export class HomeComponent implements OnInit {
           }
         }
       }
+      this.hideLoader = true;
+     }, 2000);
     }
 }
