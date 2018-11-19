@@ -144,22 +144,42 @@
         </div>
         <div class="loader" [hidden]="hideLoader"></div>
         <div class="container_1" [hidden]="hideSection_">
-          <div *ngFor="let h of c">
-            <div class="item__image-area">
+          <div *ngFor="let h of c" >
+            <div class="item__image-area" (click)="showOnCloseInfo(h.id)">
              <div style="display:flex;align-items:center;margin:auto;height:150px;">
                <img alt class="item_image" [src]="h.institute.featuredImageUri">
              </div>
             </div>
-            <div class="item__center">
+            <div class="item__center" (click)="showOnCloseInfo(h.id)">
                 <p class="title">{{ h.name }}</p>
                 <p class="title_1"> {{h.institute.school.name}}</p>
             </div>
-            <div class="item__left">
+            <div class="item__left" (click)="showOnCloseInfo(h.id)">
                 <p class="text-regular">${{h.courseRegularPrice | number}}</p>
                 <p class="text-total">${{h.coursePrice | number}}</p>
-
-                <!--<p>${{getPrice(h.id) | number}}-->
-
+            </div>
+            <!--<a href="#demo-{{h.id}}" data-toggle="collapse">Collapsible</a>-->
+            <div id="demo-{{h.id}}" class="collapse">
+              <ul>
+                 <li>
+                     {{ h.instituteInfo.name }}
+                 </li>
+                 <li>
+                     {{ h.instituteInfo.campus }}
+                 </li>
+                 <li>
+                     {{ h.instituteInfo.description }}
+                 </li>
+                 <li>
+                     {{ h.instituteInfo.website }}
+                 </li>
+                 <li>
+                     {{ h.instituteInfo.featuredImageUri }}
+                 </li>
+                 <li>
+                     {{ h.instituteInfo.iconUri }}
+                 </li>
+              </ul>
             </div>
           </div>
         </div>

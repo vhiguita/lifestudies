@@ -2,6 +2,9 @@
 Main page styles
 ========================================================================== */
 
+.navbar-collapse.collapse.in {
+  display: block!important;
+}
 
 .hipster {
     display: inline-block;
@@ -44,18 +47,21 @@ Main page styles
   transition: transform .3s;
   transition: transform .3s,-webkit-transform .3s;
   margin:auto;
+  cursor: pointer;
 }
 .item__center{
   width: 60%;
   float:left;
   height: 150px;
   /*background-color: yellow;*/
+  cursor: pointer;
 }
 .item__left{
   width: 20%;
   float:left;
   height: 150px;
   /*background-color: red;*/
+  cursor: pointer;
 }
 .container_1{
   border: 1px solid #585656;

@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
       {id:'USD',description:'Dólar Estadounidense (USD)'},
       {id:'EUR',description:'Euro (EUR)'}];
       this.filters = [{id:1,description:'Menor precio'},
-      {id:2,description:'Mayor precio'},{id:3,description:'Por curso'}];
+      {id:2,description:'Mayor precio'}/*,{id:3,description:'Por curso'}*/];
 
         this.principal.identity().then(account => {
             this.account = account;
@@ -128,9 +128,10 @@ export class HomeComponent implements OnInit {
           map(term => term.length < 2 ? []
             : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
         );
+        /*
         const Numbers =[3160,1024,2050,8081,1100,2210];
-        // let tmp: any = [];
-        /*for (let i = 0; i < Numbers.length; i++) {
+        let tmp: any = [];
+        for (let i = 0; i < Numbers.length; i++) {
          for (let j = 1; j < (Numbers.length - i); j++) {
              if (Numbers[j - 1] > Numbers[j]) {
                  tmp = Numbers[j - 1];
@@ -147,8 +148,9 @@ export class HomeComponent implements OnInit {
                  Numbers[i] = tmp;
              }
          }
-       }*/
+       }
         console.log(Numbers);
+      */
     }
     fetchMore() {
       const len = this.citiesBuffer.length;
@@ -267,14 +269,20 @@ export class HomeComponent implements OnInit {
                   this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
                 }
                 const instituteId = this.courses[j].institute.id;
-                // this.getInstituteInfo(instituteId);
                 this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
+                if(this.c[z].instituteInfo.featuredImageUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                  this.c[z].instituteInfo.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.featuredImageUri;
+                }
+                if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                  this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
+                }
+                console.log(this.c[z].instituteInfo);
                 // console.log(this.c[z].price);
                 // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
             }
           }
-          // console.log(this.c);
+          console.log(this.c);
           if(this.o.order!== undefined) {
             console.log(this.o.order);
             this.orderCoursesBy(this.o.order);
@@ -301,11 +309,16 @@ export class HomeComponent implements OnInit {
               }
               const instituteId = this.courses[j].institute.id;
               this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
-              // this.getInstituteInfo(instituteId);
-              // console.log(this.c[z].coursePrice);
+              if(this.c[z].instituteInfo.featuredImageUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                this.c[z].instituteInfo.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.featuredImageUri;
+              }
+              if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
+              }
+              console.log(this.c[z].instituteInfo);
               z++;
           }
-          // console.log(this.c);
+          console.log(this.c);
           if(this.o.order!== undefined) {
             console.log(this.o.order);
             this.orderCoursesBy(this.o.order);
@@ -323,5 +336,21 @@ export class HomeComponent implements OnInit {
       }
       this.hideLoader = true;
      }, 2000);
+    }
+    showOnCloseInfo(id) {
+      if($('#demo-'+id).css('display') === 'none') {
+         // $('#demo-'+id).css({'display': 'block'});
+         $('#demo-'+id).delay(2500).show();
+      } else {
+         // $('#demo-'+id).css({'display': 'none'});
+         $('#demo-'+id).delay(2500).hide();
+      }
+    }
+    show() {
+      if($('#demo').css('display') === 'none') {
+         $('#demo').css({'display': 'block'});
+      } else {
+         $('#demo').css({'display': 'none'});
+      }
     }
 }
