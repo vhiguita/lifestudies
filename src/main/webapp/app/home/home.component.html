@@ -147,7 +147,8 @@
           <div *ngFor="let h of c" >
             <div class="item__image-area" (click)="showOnCloseInfo(h.id)">
              <div style="display:flex;align-items:center;margin:auto;height:150px;">
-               <img alt class="item_image" [src]="h.institute.featuredImageUri">
+               <!--<img alt class="item_image" [src]="h.institute.featuredImageUri">-->
+               <img alt class="item_image" [src]="h.instituteInfo.iconUri">
              </div>
             </div>
             <div class="item__center" (click)="showOnCloseInfo(h.id)">
@@ -160,6 +161,10 @@
             </div>
             <!--<a href="#demo-{{h.id}}" data-toggle="collapse">Collapsible</a>-->
             <div id="demo-{{h.id}}" class="collapse">
+              <div class="btn-div">
+                  <button class="btn btn-primary btn-xs" type="button" (click) ="login()"><span jhiTranslate="global.menu.account.login">Sign in</span></button>
+                  <button class="btn btn-primary btn-xs" type="button" (click) ="register()"><span jhiTranslate="global.menu.account.register">Register</span></button>
+              </div>
               <ul>
                  <li>
                      {{ h.instituteInfo.name }}
@@ -180,6 +185,50 @@
                      {{ h.instituteInfo.iconUri }}
                  </li>
               </ul>
+              <!--<ngb-tabset>
+                <ngb-tab title="Información general">
+                  <ng-template ngbTabContent>
+                    <p>{{ h.instituteInfo.description }}</p>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                  <ng-template ngbTabTitle><b>Fancy</b> title</ng-template>
+                  <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+                    <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
+                    craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
+                    cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia
+                    yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+                    shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
+                    sint qui sapiente accusamus tattooed echo park.</p>
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>-->
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-{{h.id}}" role="tab">Información general</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#picture-{{h.id}}" role="tab">Foto</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#profile-{{h.id}}" role="tab">Sitio</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane active" id="home-{{h.id}}" role="tabpanel">
+                  <p>{{ h.instituteInfo.description }}</p>
+                </div>
+                <div class="tab-pane" id="picture-{{h.id}}" role="tabpanel">
+                   <div class="picture_content">
+                     <img alt class="item_logo" [src]="h.instituteInfo.featuredImageUri">
+                   </div>
+                </div>
+                <div class="tab-pane" id="profile-{{h.id}}" role="tabpanel">
+                  <p>{{ h.instituteInfo.city.name }} - {{ h.instituteInfo.city.countryCode }}</p>
+                  <p>{{ h.instituteInfo.website }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

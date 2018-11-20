@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTabsetConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -94,6 +95,7 @@ export class HomeComponent implements OnInit {
       private principal: Principal,
       private commonService: CommonService,
       private loginModalService: LoginModalService,
+      private router: Router,
       private eventManager: JhiEventManager) {}
 
     ngOnInit() {
@@ -211,7 +213,11 @@ export class HomeComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // this.modalRef = this.loginModalService.open();
+        this.router.navigate(['/loginaccount']);
+    }
+    register() {
+        this.router.navigate(['/register']);
     }
     getInstituteInfo(instituteId) {
       return this.commonService.getInstituteInfo(instituteId);

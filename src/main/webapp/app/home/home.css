@@ -49,6 +49,23 @@ Main page styles
   margin:auto;
   cursor: pointer;
 }
+.picture_content{
+  display:flex;
+  align-items:center;
+  margin:auto;
+  padding:10px;
+}
+.item_logo{
+  top: 0;
+  height: 200px;
+  width: 250px;
+  left: 0;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s,-webkit-transform .3s;
+  margin:auto;
+}
 .item__center{
   width: 60%;
   float:left;
