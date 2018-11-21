@@ -12,6 +12,8 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 import { LoginModalService, Principal, Account } from 'app/core';
 declare var $: any;
+declare const google: any;
+// let map: any;
 
 @Component({
     selector: 'jhi-home',
@@ -322,6 +324,14 @@ export class HomeComponent implements OnInit {
                 this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
               }
               console.log(this.c[z].instituteInfo);
+              /*const m = new google.maps.Map(document.getElementById('b-map-'+this.c[z].id), {
+                         zoom: 7,
+                         center: new google.maps.LatLng(4.624335, -74.063644)
+              });*/
+              // const latitude = this.c[z].instituteInfo.address.latitude;
+              // const longitude = this.c[z].instituteInfo.address.longitude;
+              // console.log(latitude+' '+longitude);
+
               z++;
           }
           console.log(this.c);
@@ -343,10 +353,11 @@ export class HomeComponent implements OnInit {
       this.hideLoader = true;
      }, 2000);
     }
-    showOnCloseInfo(id) {
+    showOnCloseInfo(id, latitude, longitude) {
       if($('#demo-'+id).css('display') === 'none') {
          // $('#demo-'+id).css({'display': 'block'});
          $('#demo-'+id).delay(2500).show();
+         this.loadMap(id, latitude, longitude);
       } else {
          // $('#demo-'+id).css({'display': 'none'});
          $('#demo-'+id).delay(2500).hide();
@@ -358,5 +369,19 @@ export class HomeComponent implements OnInit {
       } else {
          $('#demo').css({'display': 'none'});
       }
+    }
+    loadMap(id, latitude, longitude) {
+      const m = new google.maps.Map(document.getElementById('b-map-'+id), {
+                 zoom: 7,
+                 center: new google.maps.LatLng(4.624335, -74.063644)
+      });
+      console.log(latitude+' '+longitude);
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: m
+      });
+      m.setZoom(10);
+      m.setCenter(new google.maps.LatLng(latitude, longitude));
+
     }
 }

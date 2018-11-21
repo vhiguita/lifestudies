@@ -145,17 +145,17 @@
         <div class="loader" [hidden]="hideLoader"></div>
         <div class="container_1" [hidden]="hideSection_">
           <div *ngFor="let h of c" >
-            <div class="item__image-area" (click)="showOnCloseInfo(h.id)">
+            <div class="item__image-area" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
              <div style="display:flex;align-items:center;margin:auto;height:150px;">
                <!--<img alt class="item_image" [src]="h.institute.featuredImageUri">-->
                <img alt class="item_image" [src]="h.instituteInfo.iconUri">
              </div>
             </div>
-            <div class="item__center" (click)="showOnCloseInfo(h.id)">
+            <div class="item__center" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
                 <p class="title">{{ h.name }}</p>
                 <p class="title_1"> {{h.institute.school.name}}</p>
             </div>
-            <div class="item__left" (click)="showOnCloseInfo(h.id)">
+            <div class="item__left" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
                 <p class="text-regular">${{h.courseRegularPrice | number}}</p>
                 <p class="text-total">${{h.coursePrice | number}}</p>
             </div>
@@ -214,6 +214,9 @@
                 <li class="nav-item">
                   <a class="nav-link" id="contact-tab" data-toggle="tab" href="#profile-{{h.id}}" role="tab">Sitio</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#location-{{h.id}}" role="tab">Ubicación</a>
+                </li>
               </ul>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane active" id="home-{{h.id}}" role="tabpanel">
@@ -227,6 +230,9 @@
                 <div class="tab-pane" id="profile-{{h.id}}" role="tabpanel">
                   <p>{{ h.instituteInfo.city.name }} - {{ h.instituteInfo.city.countryCode }}</p>
                   <p>{{ h.instituteInfo.website }}</p>
+                </div>
+                <div class="tab-pane" id="location-{{h.id}}" role="tabpanel">
+                   <div id="b-map-{{h.id}}" class="set-map"></div>
                 </div>
               </div>
             </div>
