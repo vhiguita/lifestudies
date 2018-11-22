@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTabsetConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +12,8 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 import { LoginModalService, Principal, Account } from 'app/core';
 declare var $: any;
+declare const google: any;
+// let map: any;
 
 @Component({
     selector: 'jhi-home',
@@ -94,6 +97,7 @@ export class HomeComponent implements OnInit {
       private principal: Principal,
       private commonService: CommonService,
       private loginModalService: LoginModalService,
+      private router: Router,
       private eventManager: JhiEventManager) {}
 
     ngOnInit() {
@@ -101,7 +105,7 @@ export class HomeComponent implements OnInit {
       {id:'USD',description:'Dólar Estadounidense (USD)'},
       {id:'EUR',description:'Euro (EUR)'}];
       this.filters = [{id:1,description:'Menor precio'},
-      {id:2,description:'Mayor precio'},{id:3,description:'Por curso'}];
+      {id:2,description:'Mayor precio'}/*,{id:3,description:'Por curso'}*/];
 
         this.principal.identity().then(account => {
             this.account = account;
@@ -128,9 +132,10 @@ export class HomeComponent implements OnInit {
           map(term => term.length < 2 ? []
             : this.citiesAux.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
         );
+        /*
         const Numbers =[3160,1024,2050,8081,1100,2210];
-        // let tmp: any = [];
-        /*for (let i = 0; i < Numbers.length; i++) {
+        let tmp: any = [];
+        for (let i = 0; i < Numbers.length; i++) {
          for (let j = 1; j < (Numbers.length - i); j++) {
              if (Numbers[j - 1] > Numbers[j]) {
                  tmp = Numbers[j - 1];
@@ -147,8 +152,9 @@ export class HomeComponent implements OnInit {
                  Numbers[i] = tmp;
              }
          }
-       }*/
+       }
         console.log(Numbers);
+      */
     }
     fetchMore() {
       const len = this.citiesBuffer.length;
@@ -209,7 +215,11 @@ export class HomeComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // this.modalRef = this.loginModalService.open();
+        this.router.navigate(['/loginaccount']);
+    }
+    register() {
+        this.router.navigate(['/register']);
     }
     getInstituteInfo(instituteId) {
       return this.commonService.getInstituteInfo(instituteId);
@@ -267,14 +277,20 @@ export class HomeComponent implements OnInit {
                   this.courses[j].institute.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + imgUrl;
                 }
                 const instituteId = this.courses[j].institute.id;
-                // this.getInstituteInfo(instituteId);
                 this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
+                if(this.c[z].instituteInfo.featuredImageUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                  this.c[z].instituteInfo.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.featuredImageUri;
+                }
+                if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                  this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
+                }
+                console.log(this.c[z].instituteInfo);
                 // console.log(this.c[z].price);
                 // console.log(this.courses[j].institute.featuredImageUri);
                 z++;
             }
           }
-          // console.log(this.c);
+          console.log(this.c);
           if(this.o.order!== undefined) {
             console.log(this.o.order);
             this.orderCoursesBy(this.o.order);
@@ -301,11 +317,24 @@ export class HomeComponent implements OnInit {
               }
               const instituteId = this.courses[j].institute.id;
               this.c[z].instituteInfo = this.getInstituteInfo(instituteId);
-              // this.getInstituteInfo(instituteId);
-              // console.log(this.c[z].coursePrice);
+              if(this.c[z].instituteInfo.featuredImageUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                this.c[z].instituteInfo.featuredImageUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.featuredImageUri;
+              }
+              if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
+                this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
+              }
+              console.log(this.c[z].instituteInfo);
+              /*const m = new google.maps.Map(document.getElementById('b-map-'+this.c[z].id), {
+                         zoom: 7,
+                         center: new google.maps.LatLng(4.624335, -74.063644)
+              });*/
+              // const latitude = this.c[z].instituteInfo.address.latitude;
+              // const longitude = this.c[z].instituteInfo.address.longitude;
+              // console.log(latitude+' '+longitude);
+
               z++;
           }
-          // console.log(this.c);
+          console.log(this.c);
           if(this.o.order!== undefined) {
             console.log(this.o.order);
             this.orderCoursesBy(this.o.order);
@@ -322,6 +351,37 @@ export class HomeComponent implements OnInit {
         }
       }
       this.hideLoader = true;
-     }, 3000);
+     }, 2000);
+    }
+    showOnCloseInfo(id, latitude, longitude) {
+      if($('#demo-'+id).css('display') === 'none') {
+         // $('#demo-'+id).css({'display': 'block'});
+         $('#demo-'+id).delay(2500).show();
+         this.loadMap(id, latitude, longitude);
+      } else {
+         // $('#demo-'+id).css({'display': 'none'});
+         $('#demo-'+id).delay(2500).hide();
+      }
+    }
+    show() {
+      if($('#demo').css('display') === 'none') {
+         $('#demo').css({'display': 'block'});
+      } else {
+         $('#demo').css({'display': 'none'});
+      }
+    }
+    loadMap(id, latitude, longitude) {
+      const m = new google.maps.Map(document.getElementById('b-map-'+id), {
+                 zoom: 7,
+                 center: new google.maps.LatLng(4.624335, -74.063644)
+      });
+      console.log(latitude+' '+longitude);
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: m
+      });
+      m.setZoom(10);
+      m.setCenter(new google.maps.LatLng(latitude, longitude));
+
     }
 }

@@ -2,6 +2,9 @@
 Main page styles
 ========================================================================== */
 
+.navbar-collapse.collapse.in {
+  display: block!important;
+}
 
 .hipster {
     display: inline-block;
@@ -44,18 +47,38 @@ Main page styles
   transition: transform .3s;
   transition: transform .3s,-webkit-transform .3s;
   margin:auto;
+  cursor: pointer;
+}
+.picture_content{
+  display:flex;
+  align-items:center;
+  margin:auto;
+  padding:10px;
+}
+.item_logo{
+  top: 0;
+  height: 200px;
+  width: 250px;
+  left: 0;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s,-webkit-transform .3s;
+  margin:auto;
 }
 .item__center{
   width: 60%;
   float:left;
   height: 150px;
   /*background-color: yellow;*/
+  cursor: pointer;
 }
 .item__left{
   width: 20%;
   float:left;
   height: 150px;
   /*background-color: red;*/
+  cursor: pointer;
 }
 .container_1{
   border: 1px solid #585656;
@@ -106,7 +129,11 @@ Main page styles
   animation: spin 2s linear infinite;
   margin:auto;
 }
-
+.set-map{
+  width: 300px;
+  height: 300px;
+  margin:auto;
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
