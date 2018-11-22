@@ -156,8 +156,8 @@
                 <p class="title_1"> {{h.institute.school.name}}</p>
             </div>
             <div class="item__left" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
-                <p class="text-regular">${{h.courseRegularPrice | number}}</p>
-                <p class="text-total">${{h.coursePrice | number}}</p>
+                <b>Precio regular</b> <p class="text-regular">${{h.courseRegularPrice | number}}</p>
+                <b>Precio promocional</b> <p class="text-total">${{h.coursePrice | number}}</p>
             </div>
             <!--<a href="#demo-{{h.id}}" data-toggle="collapse">Collapsible</a>-->
             <div id="demo-{{h.id}}" class="collapse">
