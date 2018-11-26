@@ -154,18 +154,24 @@
             <div class="item__center" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
                 <p class="title">{{ h.name }}</p>
                 <p class="title_1"> {{h.institute.school.name}}</p>
+                <b>Fecha de inicio</b><p>{{h.variant[0].event[0].start | date:'yyyy-MM-dd'}}</p>
+                <b>Duración</b> <p>{{h.classDuration}}</p>
             </div>
             <div class="item__left" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
                 <b>Precio regular</b> <p class="text-regular">${{h.courseRegularPrice | number}}</p>
                 <b>Precio promocional</b> <p class="text-total">${{h.coursePrice | number}}</p>
             </div>
+            <div class="btn-div">
+             <button id="btn-{{h.id}}" class="btn btn-primary btn-xs" type="button" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">+</button>
+            </div>
             <!--<a href="#demo-{{h.id}}" data-toggle="collapse">Collapsible</a>-->
             <div id="demo-{{h.id}}" class="collapse">
               <div class="btn-div">
+                  <p>Para más información y servicios adicionales lo invitamos a </p>
                   <button class="btn btn-primary btn-xs" type="button" (click) ="login()"><span jhiTranslate="global.menu.account.login">Sign in</span></button>
                   <button class="btn btn-primary btn-xs" type="button" (click) ="register()"><span jhiTranslate="global.menu.account.register">Register</span></button>
               </div>
-              <ul>
+              <!--<ul>
                  <li>
                      {{ h.instituteInfo.name }}
                  </li>
@@ -184,25 +190,7 @@
                  <li>
                      {{ h.instituteInfo.iconUri }}
                  </li>
-              </ul>
-              <!--<ngb-tabset>
-                <ngb-tab title="Información general">
-                  <ng-template ngbTabContent>
-                    <p>{{ h.instituteInfo.description }}</p>
-                  </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                  <ng-template ngbTabTitle><b>Fancy</b> title</ng-template>
-                  <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-                    <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
-                    craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
-                    cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia
-                    yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
-                    shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
-                    sint qui sapiente accusamus tattooed echo park.</p>
-                  </ng-template>
-                </ngb-tab>
-              </ngb-tabset>-->
+              </ul>-->
 
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
