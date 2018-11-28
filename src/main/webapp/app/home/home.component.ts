@@ -364,6 +364,19 @@ export class HomeComponent implements OnInit {
          $('#btn-'+id).html('-');
          $('#demo-'+id).delay(2500).show();
          this.loadMap(id, latitude, longitude);
+         $('#slider'+id).responsiveSlides({
+           auto: false,
+           pager: false,
+           nav: true,
+           speed: 500,
+           namespace: 'callbacks',
+           before: ()  => {
+             $('.events').append('<li>before event fired.</li>');
+           },
+           after:()  => {
+             $('.events').append('<li>after event fired.</li>');
+           }
+         });
       } else {
          // $('#demo-'+id).css({'display': 'none'});
           $('#btn-'+id).html('+');
