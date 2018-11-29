@@ -1,11 +1,11 @@
 {
     "login": {
-        "title": "Iniciar la sesión",
+        "title": "Ingresar",
         "form": {
             "password": "Contraseña",
             "password.placeholder": "Su contraseña",
             "rememberme": "Iniciar la sesión automáticamente",
-            "button": "Iniciar sesión"
+            "button": "Ingresar"
         },
         "messages": {
             "error": {

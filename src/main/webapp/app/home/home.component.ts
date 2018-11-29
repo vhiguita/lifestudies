@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
     c: any = [];
     title = 'app';
     cl ='container_1';
+    url = 'https://bookandlearn.s3.amazonaws.com';
     tab = 1;
     hideSection: any = true;
     hideSection_: any = true;
@@ -155,6 +156,9 @@ export class HomeComponent implements OnInit {
        }
         console.log(Numbers);
       */
+      $('.carousel').carousel({
+        interval: 2000
+       });
     }
     fetchMore() {
       const len = this.citiesBuffer.length;
@@ -335,6 +339,7 @@ export class HomeComponent implements OnInit {
               z++;
           }
           console.log(this.c);
+          // console.log(this.c[0].variant[0].event[0].start);
           if(this.o.order!== undefined) {
             console.log(this.o.order);
             this.orderCoursesBy(this.o.order);
@@ -356,10 +361,25 @@ export class HomeComponent implements OnInit {
     showOnCloseInfo(id, latitude, longitude) {
       if($('#demo-'+id).css('display') === 'none') {
          // $('#demo-'+id).css({'display': 'block'});
+         $('#btn-'+id).html('-');
          $('#demo-'+id).delay(2500).show();
          this.loadMap(id, latitude, longitude);
+         $('#slider'+id).responsiveSlides({
+           auto: false,
+           pager: false,
+           nav: true,
+           speed: 500,
+           namespace: 'callbacks',
+           before: ()  => {
+             $('.events').append('<li>before event fired.</li>');
+           },
+           after:()  => {
+             $('.events').append('<li>after event fired.</li>');
+           }
+         });
       } else {
          // $('#demo-'+id).css({'display': 'none'});
+          $('#btn-'+id).html('+');
          $('#demo-'+id).delay(2500).hide();
       }
     }
