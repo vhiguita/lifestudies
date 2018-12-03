@@ -19,6 +19,40 @@
                     La ubicación es requerida.
                   </div>
                 </div>
+                <!--<label for="inputAddress">Ciudad</label>
+                 <div class="input-group">
+                    <ngx-select-dropdown [multiple]="false" [(value)]="singleSelect" [config]="config" [options]="options"></ngx-select-dropdown>
+                    <ng-select [allowClear]="true"
+                    [items]="items"
+                    [disabled]="disabled"
+                    (data)="refreshValue($event)"
+                    (selected)="selected($event)"
+                    (removed)="removed($event)"
+                    (typed)="typed($event)"
+                    placeholder="No city selected">
+                   </ng-select>
+                <ng-select class="custom" [items]="cities"
+                 [virtualScroll]="true"
+                 [loading]="loading"
+                 bindLabel="description"
+                 bindValue="id"
+                 placeholder=""
+                 [(ngModel)]="o.cityId"
+                 (scrollToEnd)="fetchMore($event)" ngDefaultControl>
+                 <ng-template ng-header-tmp>
+                    <small class="form-text text-muted">{{citiesBuffer.length}} de {{cities.length}}</small>
+                 </ng-template>
+                 <ng-template ng-option-tmp let-item="item" let-index="index">
+                   {{item.description}}
+                </ng-template>
+              </ng-select>-->
+                <!--<input class="form-control" type="text" [(ngModel)]="term">
+                <div *ngFor = "let item of cities |filter:term" >
+                  <p>
+                    {{item.description}}
+                  </p>
+                </div>
+                </div>-->
               </div>
             </div>
             <div class="form-row col-md-12">
@@ -58,19 +92,32 @@
                  <label>Fecha inicio</label>
                    <div class="input-group">
                      <span class="input-group-addon" (click)="d.toggle()" style="float:left;"><i class="icofont icofont-ui-calendar"></i></span>
-                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseStartDate" #courseStartDate="ngModel"/>
+                     <input type="text" class="form-control" placeholder="yyyy-mm-dd" id="courseDate" name="courseDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="o.courseStartDate" #courseStartDate="ngModel" required/>
                      <!--<input type="text" class="form-control" placeholder="yyyy-mm-dd" id="date" name="date" [(ngModel)]="o.date" ngbDatepicker #d="ngbDatepicker" (keyup)="onKey()" #date"ngModel">-->
                    </div>
+                   <div *ngIf="courseStartDate.invalid && ( (courseStartDate.dirty || courseStartDate.touched) || f1.submitted)" class="alert alert-danger">
+                      <div *ngIf="courseStartDate.errors.required">
+                        La fecha es requerida.
+                      </div>
+                      <div *ngIf="isAValidDate(o.courseStartDate)==false">
+                        El valor de la fecha no es válida.
+                      </div>
+                  </div>
                </div>
                <div class="form-group col-md-3">
                  <label for="inputAddress">Número de semanas</label>
                   <div class="input-group">
-                    <select class="form-control" name="numberOfWeeks" id="numberOfWeeks" [(ngModel)]="o.numberOfWeeks" #numberOfWeeks="ngModel">
+                    <select class="form-control" name="numberOfWeeks" id="numberOfWeeks" [(ngModel)]="o.numberOfWeeks" #numberOfWeeks="ngModel" required>
                       <option value="" disabled></option>
                       <option *ngFor="let w of weekNumber" [ngValue]="w.id">
                         {{ w.description}}
                       </option>
                     </select>
+                  </div>
+                  <div *ngIf="numberOfWeeks.invalid && ( (numberOfWeeks.dirty || numberOfWeeks.touched) || f1.submitted)" class="alert alert-danger">
+                    <div *ngIf="numberOfWeeks.errors.required">
+                      El número de semanas es requerida.
+                    </div>
                   </div>
                </div>
             </div>
@@ -92,27 +139,113 @@
                 </div>
               </div>
            </div>
+           <div class="form-group col-md-3">
+             <label for="inputAddress">Ordernar por</label>
+              <div class="input-group">
+                <select class="form-control" name="orderby" id="orderby" [(ngModel)]="o.order" #order="ngModel" (ngModelChange)="orderCoursesBy($event)">
+                  <option value="" disabled></option>
+                  <option *ngFor="let o of filters" [ngValue]="o.id">
+                    {{o.description}}
+                  </option>
+                </select>
+              </div>
+           </div>
         </div>
         <div class="btn-div">
             <!--<button class="btn btn-primary btn-xs" type="button" (click) ="searchCourses()">Búsqueda</button>-->
             <button type="submit" class="btn btn-primary btn-xs">Buscar</button>
         </div>
+        <div class="loader" [hidden]="hideLoader"></div>
         <div class="container_1" [hidden]="hideSection_">
-          <div *ngFor="let h of c">
-            <div class="item__image-area">
-             <div style="display:flex;align-items:center;margin:auto;height:150px;">
-               <img alt class="item_image" [src]="h.institute.featuredImageUri">
-             </div>
-            </div>
-            <div class="item__center">
-                <p class="title">{{ h.name }}</p>
-                <p class="title_1"> {{h.institute.school.name}}</p>
-            </div>
-            <div class="item__left">
-                <p class="title">${{h.coursePrice | number}}</p>
-                <!--<p>${{getPrice(h.id) | number}}-->
+          <div *ngFor="let h of c" >
+      		   <div class="card-content">
+                  <div class="item__image-area" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
+                   <div style="display:flex;align-items:center;margin:auto;height:150px;">
+                     <!--<img alt class="item_image" [src]="h.institute.featuredImageUri">-->
+                     <img alt class="item_image" [src]="h.instituteInfo.iconUri">
+                   </div>
+                  </div>
+                  <div class="item__center" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
+                      <p class="title">{{ h.name }}</p>
+                      <p class="title_1"> {{h.institute.school.name}}</p>
+                      <b>Fecha de inicio</b><p>{{h.variant[0].event[0].start | date:'yyyy-MM-dd'}}</p>
+                      <b>Duración</b> <p>{{h.classDuration}}</p>
+                  </div>
+                  <div class="item__left" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
+                      <b>Precio regular</b> <p class="text-regular">${{h.courseRegularPrice | number}}</p>
+                      <b>Precio promocional</b> <p class="text-total">${{h.coursePrice | number}}</p>
+                  </div>
+                  <div class="btn-div">
+                   <button id="btn-{{h.id}}" class="btn btn-primary btn-xs" type="button" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">+</button>
+                  </div>
+                  <!--<a href="#demo-{{h.id}}" data-toggle="collapse">Collapsible</a>-->
+                  <div id="demo-{{h.id}}" class="collapse">
+                    <div class="btn-div">
+                        <p>Para más información y servicios adicionales lo invitamos a </p>
+                        <button class="btn btn-primary btn-xs" type="button" (click) ="login()"><span jhiTranslate="global.menu.account.login">Sign in</span></button>
+                        <button class="btn btn-primary btn-xs" type="button" (click) ="register()"><span jhiTranslate="global.menu.account.register">Register</span></button>
+                    </div>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-{{h.id}}" role="tab">Información general</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#picture-{{h.id}}" role="tab">Galería</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#profile-{{h.id}}" role="tab">Sitio</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#location-{{h.id}}" role="tab">Ubicación</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane active" id="home-{{h.id}}" role="tabpanel">
+                        <p>{{ h.instituteInfo.description }}</p>
+                      </div>
+                      <div class="tab-pane" id="picture-{{h.id}}" role="tabpanel">
+                         <div class="picture_content">
+                           <!--<img alt class="item_logo" [src]="h.instituteInfo.featuredImageUri">-->
+                            <!--<div class="rslides_container">
+                             <ul class="rslides" id="slider1">
+                               <li>
+                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@e34acf9f96764586b05d3ffaa427346f.jpg" alt="">
+                               </li>
+                               <li>
+                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@046bdf8224f444ba8a347c93c8fd9e41.jpg" alt="">
+                               </li>
+                               <li>
+                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@2caeb4825afa46138c8aeead213bad5a.jpg" alt="">
+                               </li>
+                             </ul>
+                           </div>-->
 
-            </div>
+                            <div class="rslides_container">
+                             <ul class="rslides" id="slider-{{h.id}}">
+                               <li *ngFor="let z of h.instituteInfo.gallery">
+                                   <div *ngIf="z.path.indexOf('https://bookandlearn.s3.amazonaws.com') > -1">
+                                     <img [src]="z.path" style="height:250px;" alt="">
+                                   </div>
+                                   <div *ngIf="z.path.indexOf('https://bookandlearn.s3.amazonaws.com') <= -1">
+
+                                     <img [src]="'https://bookandlearn.s3.amazonaws.com/'+z.path" style="height:250px;" alt="">
+                                   </div>
+                               </li>
+                             </ul>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="tab-pane" id="profile-{{h.id}}" role="tabpanel">
+                        <p>{{ h.instituteInfo.city.name }} - {{ h.instituteInfo.city.countryCode }}</p>
+                        <p>{{ h.instituteInfo.website }}</p>
+                      </div>
+                      <div class="tab-pane" id="location-{{h.id}}" role="tabpanel">
+                         <div id="b-map-{{h.id}}" class="set-map"></div>
+                      </div>
+                    </div>
+                  </div>
+      		   </div>
+
           </div>
         </div>
         <div [hidden]="hideSection">

@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 
 // import { HomeComponent } from './';
+import { UserRouteAccessService } from 'app/core';
 import { IndexComponent } from './index.component';
 
 export const INDEX_ROUTE: Route = {
@@ -9,5 +10,6 @@ export const INDEX_ROUTE: Route = {
     data: {
         authorities: [],
         pageTitle: 'home.title'
-    }
+    },
+    canActivate: [UserRouteAccessService]
 };

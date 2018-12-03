@@ -2,7 +2,9 @@
 Main page styles
 ========================================================================== */
 
-
+.navbar-collapse.collapse.in {
+  display: block!important;
+}
 .hipster {
     display: inline-block;
     width: 347px;
@@ -44,21 +46,41 @@ Main page styles
   transition: transform .3s;
   transition: transform .3s,-webkit-transform .3s;
   margin:auto;
+  cursor: pointer;
+}
+.picture_content{
+  display:flex;
+  align-items:center;
+  margin:auto;
+  padding:10px;
+}
+.item_logo{
+  top: 0;
+  height: 200px;
+  width: 250px;
+  left: 0;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s,-webkit-transform .3s;
+  margin:auto;
 }
 .item__center{
   width: 60%;
   float:left;
   height: 150px;
   /*background-color: yellow;*/
+  cursor: pointer;
 }
 .item__left{
   width: 20%;
   float:left;
   height: 150px;
   /*background-color: red;*/
+  cursor: pointer;
 }
 .container_1{
-  border: 1px solid #585656;
+  /*border: 1px solid #585656;*/
   /*min-width: 900px;*/
   width: 100%;
   height:auto;
@@ -76,11 +98,59 @@ Main page styles
   font-weight: bold;
   margin-top: 10px;
 }
+.text-total{
+  font-family: "Lora", serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  color:green;
+}
+.text-regular{
+  font-family: "Lora", serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration:line-through;
+  color:red;
+}
 .title_1{
   font-family: "Lora", serif;
   font-size: 14px;
   margin-top: 10px;
 }
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin:auto;
+}
+.set-map{
+  width: 300px;
+  height: 300px;
+  margin:auto;
+}
+.card-content{
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
     only screen and (-moz-min-device-pixel-ratio: 2),

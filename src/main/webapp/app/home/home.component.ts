@@ -364,19 +364,17 @@ export class HomeComponent implements OnInit {
          $('#btn-'+id).html('-');
          $('#demo-'+id).delay(2500).show();
          this.loadMap(id, latitude, longitude);
-         $('#slider'+id).responsiveSlides({
-           auto: false,
-           pager: false,
-           nav: true,
-           speed: 500,
-           namespace: 'callbacks',
-           before: ()  => {
-             $('.events').append('<li>before event fired.</li>');
-           },
-           after:()  => {
-             $('.events').append('<li>after event fired.</li>');
-           }
-         });
+         // alert($('#slider-'+id).hasClass('centered-btns'));
+         if($('#slider-'+id).hasClass('centered-btns')===false) {
+           $('#slider-'+id).responsiveSlides({
+            auto: false,
+            pager: true,
+            nav: true,
+            speed: 500,
+            maxwidth: 500,
+            namespace: 'centered-btns'
+          });
+         }
       } else {
          // $('#demo-'+id).css({'display': 'none'});
           $('#btn-'+id).html('+');
@@ -402,6 +400,5 @@ export class HomeComponent implements OnInit {
       });
       m.setZoom(10);
       m.setCenter(new google.maps.LatLng(latitude, longitude));
-
     }
 }
