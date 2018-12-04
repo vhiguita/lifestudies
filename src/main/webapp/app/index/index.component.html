@@ -171,9 +171,25 @@
                       <b>Fecha de inicio</b><p>{{h.variant[0].event[0].start | date:'yyyy-MM-dd'}}</p>
                       <b>Duración</b> <p>{{h.classDuration}}</p>
                   </div>
-                  <div class="item__left" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
+                  <div class="item__left">
+                     <div (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">
                       <b>Precio regular</b> <p class="text-regular">${{h.courseRegularPrice | number}}</p>
                       <b>Precio promocional</b> <p class="text-total">${{h.coursePrice | number}}</p>
+                     </div>
+                     <div>
+                      <div>
+                        <button class="btn btn-primary btn-xs" type="button" (click) ="showAccommodationList(h.id)">Hospedaje</button>
+                        <div id="accommodation-{{h.id}}" class="collapse">
+                          <select class="form-control" name="accommodation" id="accommodation" [(ngModel)]="o.accommodationId" #accommodationId="ngModel">
+                            <option value="" disabled></option>
+                            <option *ngFor="let ac of h.accommodationList" [ngValue]="ac.id">
+                              {{ac.name}}
+                            </option>
+                          </select>
+                            <div><button class="btn btn-primary btn-xs" type="button" (click) ="calculatePrice(h.id, h.variant[0].id, h.variant[0].event[0].start)" style="background-color:#ff5370;border-color: #ff5370;">Calcular</button></div>
+                        </div>
+                      </div>
+                     </div>
                   </div>
                   <div class="btn-div">
                    <button id="btn-{{h.id}}" class="btn btn-primary btn-xs" type="button" (click)="showOnCloseInfo(h.id, h.instituteInfo.address.latitude, h.instituteInfo.address.longitude)">+</button>
@@ -205,21 +221,6 @@
                       </div>
                       <div class="tab-pane" id="picture-{{h.id}}" role="tabpanel">
                          <div class="picture_content">
-                           <!--<img alt class="item_logo" [src]="h.instituteInfo.featuredImageUri">-->
-                            <!--<div class="rslides_container">
-                             <ul class="rslides" id="slider1">
-                               <li>
-                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@e34acf9f96764586b05d3ffaa427346f.jpg" alt="">
-                               </li>
-                               <li>
-                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@046bdf8224f444ba8a347c93c8fd9e41.jpg" alt="">
-                               </li>
-                               <li>
-                                 <img src="https://bookandlearn.s3.amazonaws.com/institute/651-image@2caeb4825afa46138c8aeead213bad5a.jpg" alt="">
-                               </li>
-                             </ul>
-                           </div>-->
-
                             <div class="rslides_container">
                              <ul class="rslides" id="slider-{{h.id}}">
                                <li *ngFor="let z of h.instituteInfo.gallery">

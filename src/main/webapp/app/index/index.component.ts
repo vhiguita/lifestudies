@@ -20,6 +20,7 @@ declare const google: any;
   styleUrls: ['index.css']
 })
 export class IndexComponent implements OnInit {
+  accommodations: any = [];
   account: Account;
   modalRef: NgbModalRef;
   weekNumber: any = [];
@@ -73,6 +74,7 @@ export class IndexComponent implements OnInit {
           this.router.navigate(['/accessdenied']);
         }
     });
+    this.o.accommodationId = null;
     this.currencies = [{id:'COP',description:'Peso Colombiano (COP)'},
     {id:'USD',description:'Dólar Estadounidense (USD)'},
     {id:'EUR',description:'Euro (EUR)'}];
@@ -203,6 +205,7 @@ export class IndexComponent implements OnInit {
     // console.log(this.model);
     this.hideLoader = false;
     this.hideSection_ = true;
+    this.hideSection = true;
     setTimeout(() => {
     this.c.length = 0;
     this.c = [];
@@ -259,13 +262,11 @@ export class IndexComponent implements OnInit {
               if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
                 this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
               }
-              // console.log(this.c[z].instituteInfo);
-              // console.log(this.c[z].price);
-              // console.log(this.courses[j].institute.featuredImageUri);
+              this.c[z].accommodationList = this.commonService.getAcommodationListByCourse(this.c[z].id);
               z++;
           }
         }
-        // console.log(this.c);
+        console.log(this.c);
         if(this.o.order!== undefined) {
           // console.log(this.o.order);
           this.orderCoursesBy(this.o.order);
@@ -298,19 +299,10 @@ export class IndexComponent implements OnInit {
             if(this.c[z].instituteInfo.iconUri.includes('https://bookandlearn.s3.amazonaws.com') === false) {
               this.c[z].instituteInfo.iconUri = 'https://bookandlearn.s3.amazonaws.com' + '/' + this.c[z].instituteInfo.iconUri;
             }
-            // console.log(this.c[z].instituteInfo);
-            /*const m = new google.maps.Map(document.getElementById('b-map-'+this.c[z].id), {
-                       zoom: 7,
-                       center: new google.maps.LatLng(4.624335, -74.063644)
-            });*/
-            // const latitude = this.c[z].instituteInfo.address.latitude;
-            // const longitude = this.c[z].instituteInfo.address.longitude;
-            // console.log(latitude+' '+longitude);
-
+            this.c[z].accommodationList = this.commonService.getAcommodationListByCourse(this.c[z].id);
             z++;
         }
-        // console.log(this.c);
-        // console.log(this.c[0].variant[0].event[0].start);
+        console.log(this.c);
         if(this.o.order!== undefined) {
           // console.log(this.o.order);
           this.orderCoursesBy(this.o.order);
@@ -352,13 +344,6 @@ export class IndexComponent implements OnInit {
        $('#demo-'+id).delay(2500).hide();
     }
   }
-  show() {
-    if($('#demo').css('display') === 'none') {
-       $('#demo').css({'display': 'block'});
-    } else {
-       $('#demo').css({'display': 'none'});
-    }
-  }
   loadMap(id, latitude, longitude) {
     const m = new google.maps.Map(document.getElementById('b-map-'+id), {
                zoom: 7,
@@ -371,6 +356,25 @@ export class IndexComponent implements OnInit {
     });
     m.setZoom(10);
     m.setCenter(new google.maps.LatLng(latitude, longitude));
+  }
+  showAccommodationList(id) {
+    if($('#accommodation-'+id).css('display') === 'none') {
+       $('#accommodation-'+id).css({'display': 'block'});
+    } else {
+       $('#accommodation-'+id).css({'display': 'none'});
+    }
+  }
+  calculatePrice(id, variantId, date) {
+    console.log(date);
+    const startDate = date.substring(0, 10);
+    console.log(startDate);
+   // alert(id+' '+variantId+' '+this.o.accommodationId+' '+ this.o.numberOfWeeks+' '+this.o.startDate+' '+this.o.currency);
+    if(this.o.accommodationId !== null) {
+        this.commonService.getTotalPriceWithAcommodation(id, variantId, this.o.accommodationId, this.o.numberOfWeeks, startDate, this.o.currency);
+        // this.o.accommodationId = null;
+     } else {
+       alert('Debe de seleccionar el tipo de hospedaje.');
+     }
   }
   isAValidDate(dateString): boolean {
     console.log(dateString);

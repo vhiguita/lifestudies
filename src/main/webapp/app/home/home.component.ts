@@ -232,6 +232,7 @@ export class HomeComponent implements OnInit {
       // console.log(this.model);
       this.hideLoader = false;
       this.hideSection_ = true;
+      this.hideSection = true;
       setTimeout(() => {
       this.c.length = 0;
       this.c = [];
@@ -379,13 +380,6 @@ export class HomeComponent implements OnInit {
          // $('#demo-'+id).css({'display': 'none'});
           $('#btn-'+id).html('+');
          $('#demo-'+id).delay(2500).hide();
-      }
-    }
-    show() {
-      if($('#demo').css('display') === 'none') {
-         $('#demo').css({'display': 'block'});
-      } else {
-         $('#demo').css({'display': 'none'});
       }
     }
     loadMap(id, latitude, longitude) {

@@ -279,8 +279,54 @@ export class CommonService {
     }).done(function(resp) {
         data = resp;
     });
-    // console.log('--- institute info ---');
-    // console.log(data);
     return data;
+  }
+  getAcommodationListByCourse(courseId): any {
+    let data;
+    try {
+      $.ajax({
+        crossDomain: true,
+        type: 'GET',
+        dataType: 'json',
+        url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/accommodation',
+        async: false,
+      }).done(function(resp) {
+          data = resp;
+      });
+    } catch(e) {
+    }
+    return data;
+  }
+  getTotalPriceWithAcommodation(courseId, variantId, accommodationId, qty, startDate, exchangeISO) {
+    let d;
+    try {
+      const param = {
+                    'courseLine': {
+                      'qty': qty,
+                      'product': variantId,
+                      'startDate':  startDate
+                    },
+                    'accommodationLine': {
+                      'qty': qty,
+                      'product': accommodationId,
+                      'startDate': startDate
+                    }
+                  };
+        const p = JSON.stringify(param);
+        console.log(p);
+        $.ajax({
+          crossDomain: true,
+          type: 'POST',
+          dataType: 'json',
+          url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/draft',
+          data: p,
+          async: false,
+        }).done(function(resp) {
+            console.log(resp);
+            d = resp;
+        });
+    } catch(e) {
+    }
+    return d;
   }
 }
