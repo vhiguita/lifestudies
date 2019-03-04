@@ -370,7 +370,7 @@ export class IndexComponent implements OnInit {
     console.log(startDate);
    // alert(id+' '+variantId+' '+this.o.accommodationId+' '+ this.o.numberOfWeeks+' '+this.o.startDate+' '+this.o.currency);
     if(this.o.accommodationId !== null) {
-        this.commonService.getTotalPriceWithAcommodation(id, variantId, this.o.accommodationId, this.o.numberOfWeeks, startDate, this.o.currency);
+        this.commonService.getPriceAcommodation(id, variantId, this.o.accommodationId, this.o.numberOfWeeks, startDate, this.o.currency);
         // this.o.accommodationId = null;
      } else {
        alert('Debe de seleccionar el tipo de hospedaje.');

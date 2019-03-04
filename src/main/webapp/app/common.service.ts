@@ -121,12 +121,6 @@ export class CommonService {
     }).done(function(resp) {
         const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
         exchangePrice = Math.round(price * rateObj[0].rate);
-        /*for(let i=0;i<resp.rates.length;i++) {
-           if(resp.rates[i].currency === exchangeISO) {
-              exchangePrice = Math.round(price * resp.rates[i].rate);
-              break;
-           }
-        }*/
     });
     return exchangePrice;
   }
@@ -167,12 +161,6 @@ export class CommonService {
     }).done(function(resp) {
         const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
         exchangePrice = Math.round(price * rateObj[0].rate);
-        /*for(let i=0;i<resp.rates.length;i++) {
-           if(resp.rates[i].currency === exchangeISO) {
-              exchangePrice = Math.round(price * resp.rates[i].rate);
-              break;
-           }
-        }*/
     });
     return exchangePrice;
   }
@@ -212,13 +200,6 @@ export class CommonService {
     }).done(function(resp) {
       const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
       exchangePrice = Math.round(price * rateObj[0].rate);
-        /*for(let i=0;i<resp.rates.length;i++) {
-           if(resp.rates[i].currency === exchangeISO) {
-              exchangePrice = Math.round(price * resp.rates[i].rate);
-              // console.log(exchangePrice);
-              break;
-           }
-        }*/
     });
     return exchangePrice;
   }
@@ -258,13 +239,6 @@ export class CommonService {
     }).done(function(resp) {
       const rateObj = resp.rates.filter(element => element.currency === exchangeISO);
       exchangePrice = Math.round(price * rateObj[0].rate);
-        /*for(let i=0;i<resp.rates.length;i++) {
-           if(resp.rates[i].currency === exchangeISO) {
-              exchangePrice = Math.round(price * resp.rates[i].rate);
-              // console.log(exchangePrice);
-              break;
-           }
-        }*/
     });
     return exchangePrice;
   }
@@ -313,8 +287,9 @@ export class CommonService {
                     }
                   };
         const p = JSON.stringify(param);
+        console.log(param);
         console.log(p);
-        $.ajax({
+        /*$.ajax({
           crossDomain: true,
           type: 'POST',
           dataType: 'json',
@@ -324,7 +299,75 @@ export class CommonService {
         }).done(function(resp) {
             console.log(resp);
             d = resp;
-        });
+        });*/
+        /*$.ajax({
+                headers: { 'Accept': 'application/json'},
+                type: 'POST',
+                url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/draft',
+                data: p,
+                crossDomain: true,
+                beforeSend: xhr => { xhr.withCredentials = true;},
+                success: (data, textStatus, request) => {
+                      console.log(data);
+                      d= data;
+                }
+          });*/
+          $.ajax({
+                  type: 'POST',
+                  url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/draft',
+                  data: p,
+                  crossDomain: true,
+                  contentType: 'application/json',
+                  dataType: 'json',
+                  success: data => {
+                      d= data;
+                      console.log(d);
+                  },
+                  error: data => {
+                      console.log('fail');
+              }
+          });
+
+    } catch(e) {
+    }
+    return d;
+  }
+  getPriceAcommodation(courseId, variantId, accommodationId, qty, startDate, exchangeISO) {
+    let d;
+    try {
+      const param = {
+                    'courseLine': {
+                      'qty': qty,
+                      'product': variantId,
+                      'startDate':  startDate
+                    },
+                    'accommodationLine': {
+                      'qty': qty,
+                      'product': accommodationId,
+                      'startDate': startDate
+                    }
+                  };
+        const p = JSON.stringify(param);
+        $.ajax({
+                  type: 'POST',
+                  url: 'https://server.bookandlearn.com/masterkey/courseWidget/'+this.token2+'/course/'+courseId+'/draft',
+                  data: p,
+                  crossDomain: true,
+                  contentType: 'application/json',
+                  dataType: 'json',
+                  async: false,
+                  success: data => {
+                      d= data;
+                      console.log(d);
+                      console.log(d.lines[1].currency);
+                      console.log(d.lines[1].total);
+                      console.log(d.lines[1].name);
+                  },
+                  error: data => {
+                      console.log('fail');
+              }
+          });
+
     } catch(e) {
     }
     return d;
